@@ -3,27 +3,59 @@
 * {
     margin: 0;
     font-family: "Quicksand";
-    color: #333;
   }
+ 
   .navigationBar {
-    align-items: center;
     padding: 20px;
     display: flex;
-    border-bottom: 1px solid #f2f2f2;
-    background-color: rgb(42, 155, 155);
+    background-color: rgb(83, 76, 123);
+    margin: 0 auto;
   }
- .navigationBar h1{
-    display: flex;
-    align-items: center;
- }
-  .navigationBar .links {
+  .navigationBar #storeName{
+    color: #e0dfdc;
+    font-size: 30px;
+    letter-spacing: .1em;
+    text-decoration: none;
+    text-shadow: 0 -1px 0 #fff, 0 1px 0 #2e2e2e, 0 2px 0 #2c2c2c, 0 3px 0 #2a2a2a, 0 4px 0 #282828, 0 5px 0 #262626, 0 6px 0 #242424, 0 7px 0 #222, 0 8px 0 #202020, 0 9px 0 #1e1e1e, 0 10px 0 #1c1c1c, 0 11px 0 #1a1a1a, 0 12px 0 #181818, 0 13px 0 #161616, 0 14px 0 #141414, 0 15px 0 #121212, 0 22px 30px rgba(0,0,0,0.9);
+  }
+  .navigationBar .links{
     margin-left: auto;
   }
-  .navigationBar a:hover {
-    color: #f1356d;
+
+  .navigationBar .links .navbarButton{
+    font-size: 20px;
+    background-color: black;
+    color : #e0dfdc;
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+    margin-right: 30px;
+    text-decoration: none;
   }
-  .content {
-    max-width: 600px;
-    margin: 40px auto;
-    padding: 20px;
+  .search-bar{
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 30px;
+    width: 30%;
+    background-color: white;
+    border-radius: 8px;
   }
+  .cathegory-list {
+    padding-top: 20px;
+    padding-left: 4%;
+    max-width: 250px;
+    color: rgb(83, 76, 123);
+  }
+  #cathegory-title{
+    color: black;
+    margin-bottom: 15px;
+
+  }
+  .cathegory-preview{
+    border-right: 2px solid  rgb(83, 76, 123);
+  }
+  .cathegory-preview:hover{
+    background-color: rgb(83, 76, 123);
+    color: white !important;
+  }
+ 

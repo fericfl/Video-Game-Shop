@@ -1,16 +1,26 @@
 import { useState } from 'react'
 import NavigationBar from './NavigationBar'
-import HomePage from './HomePage' 
+import HomePage from './HomePage'
+import { BrowserRouter as Router,Route,Switch } from 'react-router-dom' 
+import ShoppingCart from './ShoppingCart'
 
 function App() {
   return (
-    <div className = "App">
-      <NavigationBar/>
-      <HomePage/>
-      <div className = "content" >
-        <h1>Hello!</h1>
+    <Router>
+      <div className = "App">
+        <NavigationBar/>
+        <div className = "content" >
+          <Switch>
+            <Route exact path="/">
+              <HomePage/>
+            </Route>
+            <Route path = "/shopping-cart">
+              <ShoppingCart/>
+            </Route>
+          </Switch>
+        </div>
       </div>
-    </div>
+    </Router>
   )
 }
 
