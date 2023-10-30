@@ -16,6 +16,7 @@ const HomePage = () => {
             <CathegoryList cathegories = {cathegory} title = "All cathegories"/>
         </div>
     );
+    
 }
 
 export default HomePage;
