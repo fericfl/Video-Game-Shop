@@ -6,16 +6,18 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyA_6WcdF1rjtz-sPYiqFQlk6cBb7SjX6P8",
-  authDomain: "video-game-shop-5d970.firebaseapp.com",
-  projectId: "video-game-shop-5d970",
-  storageBucket: "video-game-shop-5d970.appspot.com",
-  messagingSenderId: "648663905773",
-  appId: "1:648663905773:web:35bdb3f39f7feb1ccb23e4"
+  apiKey: "AIzaSyChHu3Az3c8YhqY1VIE_nAHFjI7Xapa1ZM",
+  authDomain: "vgame-store-8969b.firebaseapp.com",
+  projectId: "vgame-store-8969b",
+  storageBucket: "vgame-store-8969b.appspot.com",
+  messagingSenderId: "887071808087",
+  appId: "1:887071808087:web:97f70afbf78612da496112",
+  measurementId: "G-TLX7BWL5BB"
+  
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export default db;
+export {app, db};

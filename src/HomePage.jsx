@@ -1,5 +1,5 @@
 import { useState } from "react";
-import CathegoryList from "./CathegoryList";
+import CathegoryList from "./functions/CathegoryList";
 
 const HomePage = () => {
     const [cathegory, setCathegory] = useState([
