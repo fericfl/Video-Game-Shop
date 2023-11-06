@@ -43,19 +43,38 @@
   .cathegory-list {
     padding-top: 20px;
     padding-left: 4%;
-    max-width: 250px;
-    color: rgb(83, 76, 123);
   }
   #cathegory-title{
     color: black;
     margin-bottom: 15px;
-
   }
-  .cathegory-preview{
+  .cathegory-items-box{
     border-right: 2px solid  rgb(83, 76, 123);
+    max-width: 250px;
+    color: rgb(83, 76, 123);
   }
-  .cathegory-preview:hover{
+  .cathegory-items{
+    color: rgb(83, 76, 123);
+    font-size: 25px;
+    font-style: bold;
+    font-weight: 600;
+    display: block;
+
+    text-decoration: none;
+  }
+  .cathegory-items-box:hover{
+    color: white;
+  }
+  .cathegory-items:hover{
     background-color: rgb(83, 76, 123);
-    color: white !important;
+    color: white;
   }
- 
+  .product-list{
+    padding-top: 0%;
+    padding-left: 20%;
+  }
+  
+.homePage-container{
+  display:flex;
+  margin-left: 5%;
+} 

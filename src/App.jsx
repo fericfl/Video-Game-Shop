@@ -11,11 +11,11 @@ function App() {
         <NavigationBar/>
         <div className = "content" >
           <Switch>
-            <Route exact path="/">
-              <HomePage/>
-            </Route>
             <Route path = "/shopping-cart">
               <ShoppingCart/>
+            </Route>
+            <Route path="/">
+              <HomePage/>
             </Route>
           </Switch>
         </div>

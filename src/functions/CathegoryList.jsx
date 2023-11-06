@@ -5,9 +5,9 @@ const CathegoryList = ({cathegories, title}) => {
 
             {cathegories.map((cathegory) => (
                 <div className="cathegory-preview" key={cathegory.id}>
-                    <h2>
-                        {cathegory.name}
-                    </h2>
+                    <div className="cathegory-items-box">
+                        <a className="cathegory-items" href={`/${cathegory.name}`}>{cathegory.name}</a>
+                    </div>
                 </div>
             ))}
         </div>
