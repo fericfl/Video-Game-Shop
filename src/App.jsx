@@ -3,6 +3,7 @@ import NavigationBar from './NavigationBar'
 import HomePage from './HomePage'
 import { BrowserRouter as Router,Route,Switch } from 'react-router-dom' 
 import ShoppingCart from './ShoppingCart'
+import AddProduct from './functions/AddProduct'
 
 function App() {
   return (
@@ -13,6 +14,9 @@ function App() {
           <Switch>
             <Route path = "/shopping-cart">
               <ShoppingCart/>
+            </Route>
+            <Route path = "/add-product">
+              <AddProduct/>
             </Route>
             <Route path="/">
               <HomePage/>

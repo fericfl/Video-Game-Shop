@@ -78,3 +78,41 @@
   display:flex;
   margin-left: 5%;
 } 
+
+.AddProductContainer{
+  display:flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+
+.AddProductForm{
+  display:flex;
+  flex-direction: column;
+  padding: 0px 10px;
+  width: 600px;
+}
+
+.AddProductForm p{
+  font-size: 25px;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: rgb(83, 76, 123);
+}
+
+.AddProductForm label{
+  margin-top: 5px;
+  font-weight: 700;
+  font-size: 17px;
+}
+
+.AddProductForm button{
+  margin: 40px;
+  font-size: 20px;
+  background-color: black;
+  color : #e0dfdc;
+  padding: 10px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-right: 30px;
+  text-decoration: none;
+}
