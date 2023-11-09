@@ -1,25 +1,29 @@
 import { useEffect, useState} from "react";
-import { getStorage, ref, getDownloadURL} from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
+import { query, onSnapshot, doc, updateDoc, collection, getDocs, getDoc, QuerySnapshot} from "firebase/firestore";
 import fetchProducts from "./fetchProducts";
  
 
-const ProductList = () => {
+const ProductList = (props) => {
     const [products, setProducts] = useState([]);
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [imageUrl, setImageUrl] = useState('');
   
     useEffect(() => {
-      // Call the fetchProducts function when the component mounts
-      async function fetchData() {
-        const productsData = await fetchProducts();
-        setProducts(productsData);
-        if (productsData.length > 0) {
-          setSelectedProduct(productsData[0]);
-        }
+      const getProducts = () => {
+        const productArray = [];
+        const path = '/Products';
+        getDocs(collection(db, path).then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            productArray.push({...doc.data(), id:doc.id})
+          })
+          setProducts(productArray)
+        }).catch((error) => {
+          console.log(error.message)
+        }))
       }
-  
-      fetchData();
-    }, []);
+      getProducts()      
+    }, {});
   
     const storage = getStorage();
   

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { collection, getDocs, query, where, addDoc } from 'firebase/firestore';
+import { collection, getDocs, query, where, addDoc, Firestore } from 'firebase/firestore';
 import {db, storage} from "./firebase";
-import { getStorage, ref, getDownloadURL} from "firebase/storage";
+import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
 
 
 const AddProduct = () => {
-    const [genre, setgetGenre] = useState("");
+    const [genre, setGenre] = useState("");
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [popularity, setPopularity] = useState();
@@ -40,11 +40,28 @@ const AddProduct = () => {
         }
         	
     const loggeduser = GetCurrentUser();
-   
+    const storage = getStorage();
+
     const handleAddProdduct = (e) => {
         e.preventDefault();
         const storageRef = ref(storage, `Products/${name}.png`);
-
+        console.log(storageRef._location.path);
+        uploadBytes(storageRef, productImage)
+            .then(() => {
+                getDownloadURL(storageRef).then(url => {
+                    addDoc(collection(db, "products"),{
+                        genre,
+                        id,
+                        name,
+                        popularity,
+                        price,
+                        publisher,
+                        description, 
+                        productImage: url
+                    });
+                })
+            })
+        
     }
     return (
         <div className="AddProductContainer">
@@ -86,7 +103,7 @@ const AddProduct = () => {
                 {imageError && <>
                     <div className="error=msg"> {imageError}</div>
                 </>}
-                <button type='submit'>Add</button>
+                <button type='submit' onClick = {handleAddProdduct}>Add</button>
             </form>
         </div> 
     )
