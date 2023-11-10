@@ -10,6 +10,8 @@
     display: flex;
     background-color: rgb(83, 76, 123);
     margin: 0 auto;
+    position: fixed;
+    width: 99vw;
   }
   .navigationBar #storeName{
     color: #e0dfdc;
@@ -40,13 +42,11 @@
     background-color: white;
     border-radius: 8px;
   }
-  .cathegory-list {
-    padding-top: 20px;
-    padding-left: 4%;
-  }
+
   #cathegory-title{
     color: black;
     margin-bottom: 15px;
+    width: 250px;
   }
   .cathegory-items-box{
     border-right: 2px solid  rgb(83, 76, 123);
@@ -69,21 +69,6 @@
     background-color: rgb(83, 76, 123);
     color: white;
   }
-  .product-list{
-    padding-top: 0%;
-    padding-left: 20%;
-  }
-  
-.homePage-container{
-  display:flex;
-  margin-left: 5%;
-} 
-
-.AddProductContainer{
-  display:flex;
-  justify-content: center;
-  padding-top: 40px;
-}
 
 .AddProductForm{
   display:flex;
@@ -104,6 +89,12 @@
   font-weight: 700;
   font-size: 17px;
 }
+.AddProductContainer{
+  display:flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+
 
 .AddProductForm button{
   margin: 40px;
@@ -115,4 +106,36 @@
   display: inline-block;
   margin-right: 30px;
   text-decoration: none;
+}
+
+.Product-page-container{
+  padding-top: 8%;
+  padding-left: 4%;
+  padding-right: 4%;
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  overflow-x: hidden;
+
+}
+.product-list{
+  padding-left: 25%;
+  align-items: center;
+  display: grid;
+  gap: 50px;
+  grid-template-columns: repeat(4, 1fr); /* Three columns with equal width */
+} 
+img {
+  width: 200px; /* Set the width to 300 pixels */
+  height: auto; /* Maintain the aspect ratio */
+}
+.product-list-container{
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
+}
+
+.category-menu{
+  position:fixed;
+  width: 20%;
 }
