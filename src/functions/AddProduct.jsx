@@ -5,7 +5,7 @@ import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
 
 
 const AddProduct = () => {
-    const [genre, setGenre] = useState("");
+    const [genre, setGenre] = useState([]);
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [popularity, setPopularity] = useState();
@@ -79,7 +79,8 @@ const AddProduct = () => {
                 </input>
 
                 <label>Genre</label>
-                <input type = "text" onChange={(e) => {setGenre(e.target.value)}} placeholder = "Genre">     
+                <input type = "text" onChange={(e) => {setGenre(e.target.value.split(',').map(value => value.trim())) }} 
+                placeholder="Genre (comma-separated)">     
                 </input>
 
                 <label>Popularity</label>

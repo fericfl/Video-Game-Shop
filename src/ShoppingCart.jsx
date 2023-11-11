@@ -1,23 +1,34 @@
 import { useEffect, useState} from "react";
-import fetchProducts from "./functions/fetchProducts"
-// import 'firebase/firestore';
+import { collection, getDocs, query, onSnapshot, where, orderBy, startAt, QuerySnapshot} from 'firebase/firestore';
+import {db} from "./functions/firebase"; 
 
+import GetCurrentUser from "./functions/GetCurrentUser";
 const ShoppingCart = () => {
     const [products, setProducts] = useState([]);
   
-    useEffect(() => {
-      // Call the fetchProducts function when the component mounts
-      async function fetchData() {
-        const productsData = await fetchProducts();
-        setProducts(productsData);
+    const loggeduser = GetCurrentUser();
+    const [cartData, setCartData] = useState([]);
+    if(loggeduser){
+      const getCartData = async () => {
+        const cartArray = [];
+        const path = `cart-${loggeduser[0].uid}`;
+        getDocs(collection(db, path), then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            cartArray.push({...doc.data(), id:doc.id})
+          });
+          setCartData(cartArray);
+        }))
       }
-  
-      fetchData();
-    }, []);
-  
+    }
     return (
       <div className="shoppingCart">
-        <h1>{products.map((productItem) => {return <p key = {productItem.id}>{productItem.name}</p>}) }</h1>
+        {cartData ? <div> 
+            <div>
+              Your cart is not empty
+            </div> 
+          </div> : <p>
+          Your cart is empty
+          </p>}
       </div>
     );
   };

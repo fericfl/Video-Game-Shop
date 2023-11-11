@@ -1,5 +1,5 @@
 import { useEffect, useState} from "react";
-import { collection, getDocs, query, onSnapshot} from 'firebase/firestore';
+import { collection, getDocs, query, onSnapshot, where, orderBy, startAt} from 'firebase/firestore';
 import {db} from "./firebase"; 
 import CathegoryList from "./CathegoryList";
 import ProductContainer from "./ProductContainer";
@@ -12,7 +12,8 @@ const ProductList = ({category}) => {
     useEffect(() => {
       const getProducts = () => {
         const productArray = [];
-        getDocs(collection(db, 'products'))
+        const q = query(collection(db, 'products'), where('genre', 'array-contains', category));
+        getDocs(q)
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
             productArray.push({...doc.data(), id:doc.id})

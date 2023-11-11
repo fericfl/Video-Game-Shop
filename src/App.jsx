@@ -5,6 +5,7 @@ import { BrowserRouter as Router,Route,Switch } from 'react-router-dom'
 import ShoppingCart from './ShoppingCart'
 import AddProduct from './functions/AddProduct'
 import ProductList from './functions/ProductList'
+import SpecificProductPage from './SpecificProductPage'
 
 function App() {
   return (
@@ -20,25 +21,28 @@ function App() {
               <AddProduct/>
             </Route>
             <Route exact path = "/games-action">
-              <ProductList category = {'action'}/>
+              <ProductList category = {'Action'}/>
             </Route>
             <Route exact path = "/games-shooter">
-              <ProductList category = {'shooter'}/>
+              <ProductList category = {'Shooter'}/>
             </Route> 
             <Route exact path = "/games-story">
-              <ProductList category = {'story'}/>
+              <ProductList category = {'Story'}/>
             </Route>
             <Route exact path = "/games-simulation">
-              <ProductList category = {'simulation'}/>
+              <ProductList category = {'Simulation'}/>
             </Route>
             <Route exact path = "/games-adventure">
-              <ProductList category = {'adventure'}/>
+              <ProductList category = {'Adventure'}/>
             </Route>
             <Route exact path = "/games-racing">
-              <ProductList category = {'racing'}/>
+              <ProductList category = {'Racing'}/>
             </Route>
             <Route exact path = "/games-puzzle">
-              <ProductList category = {'puzzle'}/>
+              <ProductList category = {'Puzzle'}/>
+            </Route>
+            <Route path = "/games/:id">
+              <SpecificProductPage/>
             </Route>
             <Route path="/">
               <HomePage/>
