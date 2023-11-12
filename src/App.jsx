@@ -6,6 +6,9 @@ import ShoppingCart from './ShoppingCart'
 import AddProduct from './functions/AddProduct'
 import ProductList from './functions/ProductList'
 import SpecificProductPage from './SpecificProductPage'
+import Login from './Login'
+import Signup from './Signup'
+import Profile from './Profile'
 
 function App() {
   return (
@@ -43,6 +46,15 @@ function App() {
             </Route>
             <Route path = "/games/:id">
               <SpecificProductPage/>
+            </Route>
+            <Route path = "/login">
+              <Login/>
+            </Route>
+            <Route path = "/signup">
+              <Signup/>
+            </Route>
+            <Route path = "/profile">
+              <Profile/>
             </Route>
             <Route path="/">
               <HomePage/>
