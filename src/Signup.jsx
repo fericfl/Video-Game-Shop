@@ -1,6 +1,5 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min'
-// import { useNavigate } from 'react-router-dom'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth, db } from './functions/firebase'
 import { collection, addDoc } from 'firebase/firestore'
@@ -11,7 +10,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
-  // const navigate = useNavigate()
+  // const navigate = useNavigate();
 
   const [errorMsg, setErrorMsg]  = useState("");
   const [successMsg, setSuccessMsg] = useState("");
@@ -51,7 +50,6 @@ const Signup = () => {
   }
 
   return ( 
-    <div>
       <div className='signup-container'>
           <form className='signup-form' onSubmit={handleSubmit}>
               <p>Create Account</p>
@@ -86,7 +84,6 @@ const Signup = () => {
               </p>
           </form>
       </div>
-    </div>
   )
 }
 
