@@ -1,17 +1,13 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
-import { auth, db } from './functions/firebase'
+import { auth, db } from './firebase'
 import { collection, addDoc } from 'firebase/firestore'
-import './index.css';
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
-  // const navigate = useNavigate();
-
   const [errorMsg, setErrorMsg]  = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
@@ -20,21 +16,19 @@ const Signup = () => {
       createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) =>{
           const user = userCredential.user
-          console.log(user); 
-
           addDoc(collection(db, "users"),{
             username: username,
             email: email,
             password: password,
             uid: user.uid
           }).then(() =>{
-              setSeccessMsg('New user added successfully, you will now be automatically redirected to login page.')
-              setUserName('')
+              setSuccessMsg('New user added successfully, you will now be automatically redirected to login page.')
+              setUsername('')
               setEmail('')
               setPassword('')
               setTimeout(() => {
                   setSuccessMsg('');
-                  // navigate('/login');
+                  window.location.href = '/login';
               }, 4000);
             })
             

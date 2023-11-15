@@ -6,8 +6,8 @@ import ShoppingCart from './ShoppingCart'
 import AddProduct from './functions/AddProduct'
 import ProductList from './functions/ProductList'
 import SpecificProductPage from './SpecificProductPage'
-import Login from './Login'
-import Signup from './Signup'
+import Login from './functions/Login'
+import Signup from './functions/Signup'
 import Profile from './Profile'
 
 function App() {

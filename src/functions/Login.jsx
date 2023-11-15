@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
-import './index.css'
-import NavigationBar from './NavigationBar'
+
 const Login = () => {
   const [password, setPassword] = useState();
   const [email, setEmail] = useState();
@@ -15,13 +14,12 @@ const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       setSuccessMsg('Logged in successfully, you will be redirected to home')
-
       setEmail('')
       setPassword('')
       setErrorMsg('')
       setTimeout(() => {
         setSuccessMsg('');
-        // redirect home
+        window.location.href = '/';
       }, 3000)
     }).catch((error) => {
         setErrorMsg('Something went wrong. Please check credentials and try again')
