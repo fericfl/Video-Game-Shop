@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom/cjs/react-router-dom.min'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth, db } from './functions/firebase'
 import { collection, addDoc } from 'firebase/firestore'
-import './Signup.css';
+import './index.css';
 
 const Signup = () => {
   const [username, setUsername] = useState("");
