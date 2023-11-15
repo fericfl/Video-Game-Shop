@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
-import { getDoc, doc} from "firebase/firestore";
+import {addDoc, getDoc, doc, collection} from "firebase/firestore";
 import {db} from "./functions/firebase"; // Import your Firebase configuration
 import CathegoryList from "./functions/CathegoryList";
+import GetCurrentUser from "./functions/GetCurrentUser"
+import AddToCart from "./functions/AddToCart";
 
 const SpecificProductPage = () => {
     const {id} = useParams();
     const [product, setProduct] = useState('');
+
 
     useEffect(() => {
         const getProduct = async () => {
@@ -17,7 +20,14 @@ const SpecificProductPage = () => {
         getProduct();
       }, [id]);
 
+    const loggeduser = GetCurrentUser();
+    const handleAddToCart = () => {
+        AddToCart({ loggeduser, product });
+    };
+    
 
+    console.log(loggeduser);
+    
     return <div className="Product-page-container">
         <div className = "category-menu">
           <CathegoryList title= "All Categories"/>
@@ -43,7 +53,7 @@ const SpecificProductPage = () => {
                     <div className="product-price">{product.price} RON</div>
                 </div>
                 <div className = "buy-cart">
-                <button className = 'btn-specific'>
+                <button className = 'btn-specific' onClick={handleAddToCart}>
                     Add to cart
                 </button>
             </div>

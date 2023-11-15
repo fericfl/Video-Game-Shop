@@ -1,7 +1,7 @@
-.login-contaniner {
+.login-container {
     display: flex;
     justify-content: center;
-    padding-top: 100px;
+    padding-top: 8%;
 }
 
 .login-form {

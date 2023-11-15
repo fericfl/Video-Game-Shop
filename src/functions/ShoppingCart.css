@@ -1,0 +1,148 @@
+.shopping-cart-container{
+    display: grid;
+    gap: 25px;
+    grid-template-columns: 2fr 1fr;
+}
+
+.productdetails{
+    align-self: right;
+}
+.cart-head{
+    font-size: 40px;
+    color: purple;
+}
+.shoppingCart{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 8%;
+}
+.cart-prod-container{
+    width: 50vw;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid lightgrey;
+    
+    border-radius: 20px;
+
+}
+.allcartitems{
+    display: grid;
+    gap: 25px;
+    grid-template-columns: 1fr;
+}
+.prod-image img{
+    padding-left: 10%;
+    width: 70px;
+    height: auto;
+    margin: 5%;
+}
+
+.cart-prod-container {
+    display: flex;
+    align-items: center; /* Vertically center the content */
+    justify-content: space-between; /* Spread the content to the ends */
+    margin-bottom: 15px; /* Optional: Add margin for spacing */
+  }
+  
+  .productdetails {
+    text-align: right; /* Align text to the right within productdetails */
+  }
+  
+  .modify-quantity {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: flex-end; /* Align the buttons to the right within modify-quantity */
+  }
+  .prodprice{
+    text-align: center;
+  }
+  .price-and-quantity{
+    justify-content: space-between;
+    padding-right: 3%;
+
+  }
+  .quantity{
+    width: 50%;
+    text-align: center;
+  }
+  .quantity-button{
+    border-radius: 30px;
+    border-color: purple;
+    background-color:purple;
+    color: white;
+    font-size: 100%;
+  }
+  .prodprice{
+    font-size: 20px;
+    padding-bottom: 20%;
+  }
+  .delete-button{
+    padding-top: 10%;
+    background-color: transparent;
+    border: transparent;
+    color: purple;
+  }
+  .delete-button:hover{
+    color: red;
+  }
+
+  .order-summary{
+    grid-column: 2;
+    left:65vw;
+    position:fixed;
+    width: 30vw;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid lightgrey;  
+    border-radius: 20px;
+    align-items: center; /* Center items horizontally */
+}
+  .order-summary-title{
+    font-size: 200%;
+    color: purple;
+    width: 100%; /* Extend to the full width of the container */
+    text-align: center; /* Center the text within the title */
+    padding: 10px; /* Add padding as needed */
+    box-sizing: border-box;
+    padding-bottom: 10%;
+  }
+  .checkout-button{
+    color: white;
+    background-color: purple;
+    font-size: 100%;
+    height: 100%;
+    border-radius: 30px;
+    align-self: center; /* Align the button to the bottom of the container */
+    margin-top: auto; /* Push the button to the bottom, adjusting the space above */
+  }
+  .total-price {
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+    justify-content: space-between;
+    box-sizing: content-box;
+  }
+  .checkout-button-div{
+    height: 20%;
+    padding-bottom: 5%;
+    padding-top: 5%;
+
+  }
+  .total{
+    padding-top: 10%;
+    font-size: 100%;
+    font-weight: 500;
+
+  }
+  .total-price-final{
+    font-size: 120%;
+    font-weight: 500;
+
+  }

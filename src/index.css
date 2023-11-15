@@ -22,6 +22,8 @@
   }
   .navigationBar .links{
     margin-left: auto;
+    display: flex;
+    flex-direction: row;
   }
 
   .navbarButton:hover{
@@ -150,7 +152,7 @@
   text-align: center;
 }
 .product-container:hover img{
-  transform: scale(1.02); /* Adjust the scaling factor as needed */
+  transform: scale(1.02); 
   z-index: 1;
 }
 
@@ -219,4 +221,32 @@
 .specific-product-price{
   padding-bottom: 5%;
   font-size: 1vw;
+}
+.profile-container{
+  padding-top: 8%;
+
+}
+.login-contaniner {
+  display: flex;
+  justify-content: center;
+  padding-top: 8%;
+}
+.shopping-cart-logo img{
+  width: 45px;
+  height: auto;
+}
+.shopping-cart-logo{
+  margin-right: 10px;
+}
+.cart-icon-css{
+  border-radius: 30px;
+  border-color: white;
+  background-color:transparent;
+  color: white;
+}
+
+.prod-title{
+  font-weight: 400;
+  font-size: 170%;
+  color: purple;
 }
