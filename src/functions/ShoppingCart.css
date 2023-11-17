@@ -9,7 +9,7 @@
 }
 .cart-head{
     font-size: 40px;
-    color: purple;
+    color:  rgb(83, 76, 123);
 }
 .shoppingCart{
   display: flex;
@@ -70,8 +70,8 @@
   }
   .quantity-button{
     border-radius: 30px;
-    border-color: purple;
-    background-color:purple;
+    border-color: rgb(83, 76, 123);
+    background-color:  rgb(83, 76, 123);
     color: white;
     font-size: 100%;
   }
@@ -83,7 +83,7 @@
     padding-top: 10%;
     background-color: transparent;
     border: transparent;
-    color: purple;
+    color: rgb(83, 76, 123);
   }
   .delete-button:hover{
     color: red;
@@ -110,7 +110,7 @@
 }
   .order-summary-title{
     font-size: 200%;
-    color: purple;
+    color:  rgb(83, 76, 123);
     width: 100%; /* Extend to the full width of the container */
     text-align: center; /* Center the text within the title */
     padding: 10px; /* Add padding as needed */
@@ -119,7 +119,7 @@
   }
   .order-summary-email{
     font-size: 100%;
-    color: purple;
+    color: rgb(83, 76, 123);
     width: 100%; /* Extend to the full width of the container */
     text-align: center; /* Center the text within the title */
     box-sizing: border-box;
@@ -128,7 +128,7 @@
   }
   .checkout-button{
     color: white;
-    background-color: purple;
+    background-color:  rgb(83, 76, 123);
     font-size: 100%;
     height: 100%;
     border-radius: 30px;
