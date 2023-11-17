@@ -28,7 +28,7 @@ const NavigationBar = () => {
             }).catch('Error error error');
         }
         getCartData();
-    }}, [loggeduser]);
+    }}, [loggeduser, cartdata]);
 
     return(
         <nav className = "navigationBar">

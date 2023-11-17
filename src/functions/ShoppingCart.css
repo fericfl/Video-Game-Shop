@@ -89,11 +89,17 @@
     color: red;
   }
 
-  .order-summary{
+  .order-summary-container{
     grid-column: 2;
     left:65vw;
     position:fixed;
     width: 30vw;
+    grid-template-rows: 1fr 2fr;
+    display: grid;
+
+    
+  }
+  .order-summary{
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -110,6 +116,15 @@
     padding: 10px; /* Add padding as needed */
     box-sizing: border-box;
     padding-bottom: 10%;
+  }
+  .order-summary-email{
+    font-size: 100%;
+    color: purple;
+    width: 100%; /* Extend to the full width of the container */
+    text-align: center; /* Center the text within the title */
+    box-sizing: border-box;
+    padding-top: 2%;
+    padding-bottom: 2%;
   }
   .checkout-button{
     color: white;
@@ -144,5 +159,18 @@
   .total-price-final{
     font-size: 120%;
     font-weight: 500;
+
+  }
+  .email-text{
+    width: 70%;
+    margin-bottom: 5%;
+  }
+  .set-order-email{
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid lightgrey;  
+    border-radius: 20px;
+    align-items: center;
 
   }
