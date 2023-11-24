@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 import GetCurrentUser from './functions/GetCurrentUser'
 import { updateDoc } from 'firebase/firestore';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import {db, auth} from "./functions/firebase"
+import './functions/ShoppingCart.css'
+import {Link} from 'react-router-dom'
+
 
 const Profile = () => {
-
   const user = GetCurrentUser();
 
   const [username, setName] = useState(user ? user[0].username : '');
@@ -61,41 +62,41 @@ const Profile = () => {
   console.log(user);
 
   return (
-    <div className='profile-container'>
-      <p>Your Profile</p>
-        <Link to="/signup" id="navbarButton">Signup</Link>
-        <Link to="/login" id="navbarButton">Login</Link>
-        <h1>User Profile</h1>
-      <p>Name: {user[0].username}</p>
-      <p>Email: {user[0].email}</p>
+      <div className='profile-container'>
+        <p>Your Profile</p>
+          <Link to="/signup" id="navbarButton">Signup</Link>
+          <Link to="/login" id="navbarButton">Login</Link>
+          <h1>User Profile</h1>
+        <p>Name: {user[0].username}</p>
+        <p>Email: {user[0].email}</p>
 
-      <div>
-        <label>
-          New Name:
-          <input type="text" value={username} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <button onClick={handleUpdateName}>Update Name</button>
-      </div>
-
-      <div>
-        <label>
-          New Email:
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <button onClick={handleUpdateEmail}>Update Email</button>
-      </div>
-
-      <div>
         <div>
-          <button onClick={handleResetPassword}>Reset Password</button>
+          <label>
+            New Name:
+            <input type="text" value={username} onChange={(e) => setName(e.target.value)} />
+          </label>
+          <button onClick={handleUpdateName}>Update Name</button>
         </div>
-      </div>
 
-      <div>
-        <button onClick={handleDeleteAccount}>Delete Account</button>
-        <button onClick={handleViewOrderHistory}>View Order History</button>
-      </div>     
-    </div>
+        <div>
+          <label>
+            New Email:
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          </label>
+          <button onClick={handleUpdateEmail}>Update Email</button>
+        </div>
+
+        <div>
+          <div>
+            <button onClick={handleResetPassword}>Reset Password</button>
+          </div>
+        </div>
+
+        <div>
+          <button onClick={handleDeleteAccount}>Delete Account</button>
+          <button onClick={handleViewOrderHistory}>View Order History</button>
+        </div>     
+      </div>
   )
 }
 

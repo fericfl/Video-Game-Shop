@@ -4,8 +4,11 @@ import {db} from "./functions/firebase";
 import CartCard from "./CartCard"
 import GetCurrentUser from "./functions/GetCurrentUser";
 import './functions/ShoppingCart.css'
-const ShoppingCart = () => {  
+
+
+const ShoppingCart = () => {
     const loggeduser = GetCurrentUser();
+ 
     const [cartData, setCartData] = useState([]);
     const [totalprice, setTotalPrice] = useState(0);
     const [orderEmail, setOrderEmail] = useState('');
@@ -78,8 +81,8 @@ const ShoppingCart = () => {
       }
     };
     
-    return (
-      <div className="shoppingCart">
+    return (        
+        <div className="shoppingCart">
         {cartData && cartData.length > 0 ? <div> 
           <div className='cart-head'> Your Cart Items </div>
 
@@ -121,7 +124,7 @@ const ShoppingCart = () => {
           </div> : <div className="cart-head">
             Your cart is empty!
           </div>}
-      </div>
+      </div>      
     );
   };
 

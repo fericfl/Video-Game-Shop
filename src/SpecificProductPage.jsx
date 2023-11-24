@@ -5,8 +5,11 @@ import {db} from "./functions/firebase"; // Import your Firebase configuration
 import CathegoryList from "./functions/CathegoryList";
 import GetCurrentUser from "./functions/GetCurrentUser"
 import AddToCart from "./functions/AddToCart";
+import {Link} from 'react-router-dom'
+
 
 const SpecificProductPage = () => {
+    const loggeduser = GetCurrentUser();
     const {id} = useParams();
     const [product, setProduct] = useState('');
 
@@ -20,7 +23,6 @@ const SpecificProductPage = () => {
         getProduct();
       }, [id]);
 
-    const loggeduser = GetCurrentUser();
     const handleAddToCart = () => {
         AddToCart({ loggeduser, product });
     };
@@ -60,6 +62,7 @@ const SpecificProductPage = () => {
             </div>
         </div>
     </div>
+    
 }
 
 export default SpecificProductPage;
