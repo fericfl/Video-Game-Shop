@@ -6,12 +6,14 @@ import {db} from "./functions/firebase"; // Import your Firebase configuration
 import cartlogo from './assets/shopping-cart-3045.svg'
 import addlogo from './assets/add-button-12017.svg'
 import profilelogo from './assets/person-244.svg'
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const NavigationBar = () => {
-    const hasSearchBar = false;
+    const hasSearchBar = true;
 
     const loggeduser = GetCurrentUser();
     const [cartdata, setcartdata] = useState([]);
+    const [search, setSearch] = useState("");
     useEffect(() => {
     if(loggeduser){
         const getCartData= async () => {
@@ -28,14 +30,32 @@ const NavigationBar = () => {
             }).catch('Error error error');
         }
         getCartData();
-    }}, [loggeduser]);
+        console.log("getting cart data!!");
+    }}, []);
+    const history = useHistory();
+    const [formData, setFormData] = useState('');
+
+    const handleFormSubmit = () => {
+        // Perform any necessary actions (e.g., form validation, data submission)
+
+        // Navigate to a different page or component with the form data as state
+        history.push({
+        pathname: `/search-results/${search}`,
+        state: { search },
+        });
+    };
 
     return(
         <nav className = "navigationBar">
             <Link to="/" id="storeName">
                 Video Game Store
             </Link>
-            {hasSearchBar && <div className="search-bar">            
+            {hasSearchBar && <div className="wrap">
+            <div className="search">
+                <input type="text" className="searchTerm" placeholder="What are you looking for?" onChange={e => {setSearch(e.target.value); console.log(search)}}/>
+                <button type="submit" className="searchButton" onClick={handleFormSubmit}>
+                </button>
+                </div>
             </div>
             }
             <div className="links">

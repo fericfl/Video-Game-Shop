@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
-import {Link} from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 import GetCurrentUser from './functions/GetCurrentUser'
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import {db, auth} from "./functions/firebase"
+import './functions/ShoppingCart.css'
+import {Link} from 'react-router-dom'
+
 
 const Profile = () => {
-
   const user = GetCurrentUser();
 
   const [username, setName] = useState(user ? user[0].username : '');

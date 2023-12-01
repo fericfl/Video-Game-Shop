@@ -4,10 +4,9 @@ import {db} from "./firebase";
 import CathegoryList from "./CathegoryList";
 import ProductContainer from "./ProductContainer";
 
+
 const ProductList = ({category}) => {
     const [products, setProducts] = useState([]);
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [imageUrl, setImageUrl] = useState('');
   
     useEffect(() => {
       const getProducts = () => {

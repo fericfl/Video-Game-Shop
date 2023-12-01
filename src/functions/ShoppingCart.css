@@ -9,7 +9,7 @@
 }
 .cart-head{
     font-size: 40px;
-    color: purple;
+    color:  rgb(83, 76, 123);
 }
 .shoppingCart{
   display: flex;
@@ -70,8 +70,8 @@
   }
   .quantity-button{
     border-radius: 30px;
-    border-color: purple;
-    background-color:purple;
+    border-color: rgb(83, 76, 123);
+    background-color:  rgb(83, 76, 123);
     color: white;
     font-size: 100%;
   }
@@ -83,17 +83,23 @@
     padding-top: 10%;
     background-color: transparent;
     border: transparent;
-    color: purple;
+    color: rgb(83, 76, 123);
   }
   .delete-button:hover{
     color: red;
   }
 
-  .order-summary{
+  .order-summary-container{
     grid-column: 2;
     left:65vw;
     position:fixed;
     width: 30vw;
+    grid-template-rows: 1fr 2fr;
+    display: grid;
+
+    
+  }
+  .order-summary{
     height: fit-content;
     display: flex;
     flex-direction: column;
@@ -104,16 +110,25 @@
 }
   .order-summary-title{
     font-size: 200%;
-    color: purple;
+    color:  rgb(83, 76, 123);
     width: 100%; /* Extend to the full width of the container */
     text-align: center; /* Center the text within the title */
     padding: 10px; /* Add padding as needed */
     box-sizing: border-box;
     padding-bottom: 10%;
   }
+  .order-summary-email{
+    font-size: 100%;
+    color: rgb(83, 76, 123);
+    width: 100%; /* Extend to the full width of the container */
+    text-align: center; /* Center the text within the title */
+    box-sizing: border-box;
+    padding-top: 2%;
+    padding-bottom: 2%;
+  }
   .checkout-button{
     color: white;
-    background-color: purple;
+    background-color:  rgb(83, 76, 123);
     font-size: 100%;
     height: 100%;
     border-radius: 30px;
@@ -144,5 +159,18 @@
   .total-price-final{
     font-size: 120%;
     font-weight: 500;
+
+  }
+  .email-text{
+    width: 70%;
+    margin-bottom: 5%;
+  }
+  .set-order-email{
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    border: 2px solid lightgrey;  
+    border-radius: 20px;
+    align-items: center;
 
   }

@@ -9,6 +9,7 @@ import SpecificProductPage from './SpecificProductPage'
 import Login from './functions/Login'
 import Signup from './functions/Signup'
 import Profile from './Profile'
+import SearchResultsPage from './SearchResultsPage'
 
 function App() {
   return (
@@ -46,6 +47,9 @@ function App() {
             </Route>
             <Route path = "/games/:id">
               <SpecificProductPage/>
+            </Route>
+            <Route path = "/search-results/:search">
+              <SearchResultsPage/>
             </Route>
             <Route path = "/login">
               <Login/>
