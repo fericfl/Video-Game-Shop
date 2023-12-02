@@ -54,6 +54,10 @@
     position: fixed;
     width: 99vw;
   }
+  .loginBar {
+    display: flex;
+    margin: 0 auto;
+  }
   .navigationBar #storeName{
     color: #e0dfdc;
     font-size: 30px;
@@ -61,10 +65,13 @@
     text-decoration: none;
     text-shadow: 0 2px 0 #2e2e2e, 0 3px 0 #2c2c2c;
   }
+  
   .navigationBar .links{
     margin-left: auto;
     display: flex;
     flex-direction: row;
+    font-family: "Quicksand" !important;
+
   }
 
   .navbarButton:hover{
@@ -268,6 +275,16 @@
   padding-top: 8%;
 
 }
+
+.profile-form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 40px;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 10px;
+  width: 350px;
+}
 .login-contaniner {
   display: flex;
   justify-content: center;
@@ -315,6 +332,11 @@
   border: none;
 }
 
+.profile-form input:focus {
+  outline: 2px solid purple;
+  border: none;
+}
+
 .login-form button {
   background-color: blueviolet;
   margin: 20px 0px;
@@ -327,6 +349,23 @@
 }
 
 .login-form button:hover {
+  background-color: black;
+  color: blueviolet;
+  cursor: pointer;
+}
+
+.profile-form button {
+  background-color: blueviolet;
+  margin: 20px 0px;
+  border: none;
+  font-size: 20px;
+  color: white;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.profile-form button:hover {
   background-color: black;
   color: blueviolet;
   cursor: pointer;
@@ -412,8 +451,16 @@
 }
 
 .profile-container {
-  padding-top: 5%;
+  padding-top: 8%;
+  display: flex;
+  justify-content: center;
 }
+
+.hyperlink {
+  font-family: 'Quicksand';
+  font-size: 14px;
+}
+
 .description-input{
   word-wrap: break-word;
   word-break: break-all;
