@@ -12,14 +12,6 @@ async function fetchProducts() {
     const product = productConverter.fromFirestore(doc, {});
     products.push(product);
   });
-
-  // Now, 'products' is an array of Product instances
-  /*console.log(products);
-
-  // You can access custom object methods like 'toString' on these instances
-  products.forEach((product) => {
-    console.log(product.toString());
-  });*/
   return products;
 }
 

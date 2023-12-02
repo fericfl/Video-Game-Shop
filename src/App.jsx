@@ -6,6 +6,7 @@ import ShoppingCart from './ShoppingCart'
 import AddProduct from './functions/AddProduct'
 import ProductList from './functions/ProductList'
 import SpecificProductPage from './SpecificProductPage'
+import EditPage from './EditPage'
 import Login from './functions/Login'
 import Signup from './functions/Signup'
 import Profile from './Profile'
@@ -47,6 +48,9 @@ function App() {
             </Route>
             <Route path = "/games/:id">
               <SpecificProductPage/>
+            </Route>
+            <Route path = "/edit-page/:name">
+              <EditPage/>
             </Route>
             <Route path = "/search-results/:search">
               <SearchResultsPage/>

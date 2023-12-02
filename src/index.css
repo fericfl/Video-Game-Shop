@@ -163,8 +163,9 @@
   flex-direction: row;
   width: 90%;
   overflow-x: hidden;
-
+  overflow-y: hidden;
 }
+
 .product-list{
   align-items: center;
   display: grid;
@@ -194,7 +195,7 @@
 }
 .product-container:hover img{
   transform: scale(1.02); 
-  z-index: 1;
+  
 }
 
 .product-details{
@@ -289,7 +290,7 @@
 .prod-title{
   font-weight: 400;
   font-size: 170%;
-  color: purple;
+  color: rgb(83, 76, 123);
 }
 
 
@@ -310,7 +311,7 @@
 }
 
 .login-form input:focus {
-  outline: 2px solid purple;
+  outline: 2px solid rgb(83, 76, 123);
   border: none;
 }
 
@@ -368,7 +369,7 @@
 }
 
 .signup-form input:focus {
-  outline: 2px solid purple;
+  outline: 2px solid rgb(83, 76, 123);
   border: none;
 }
 
@@ -412,4 +413,9 @@
 
 .profile-container {
   padding-top: 5%;
+}
+.description-input{
+  word-wrap: break-word;
+  word-break: break-all;
+  height: 80px;
 }
