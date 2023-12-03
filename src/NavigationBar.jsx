@@ -14,6 +14,8 @@ const NavigationBar = () => {
     const loggeduser = GetCurrentUser();
     const [cartdata, setcartdata] = useState([]);
     const [search, setSearch] = useState("");
+    console.log(loggeduser);
+    
     useEffect(() => {
     if(loggeduser){
         const getCartData= async () => {
@@ -59,7 +61,7 @@ const NavigationBar = () => {
             </div>
             }
             <div className="links">
-                {loggeduser && loggeduser[0].email == "ericflorea@email.com" ?
+                {loggeduser && loggeduser[0].email === "admin@email.com" ?
                 <Link to="/add-product" className="shopping-cart-logo"><img src = {addlogo} alt = "no img"/></Link> 
                 : <></>}
                 <div className='cart-btn'>
