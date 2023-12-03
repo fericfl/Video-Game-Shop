@@ -459,3 +459,18 @@
   font-family: 'Quicksand';
   font-size: 14px;
 }
+
+.order-container {
+  display: flex;
+  justify-content: center;
+  padding-top: 8%;
+}
+
+.order-form {
+  display: flex;
+  flex-direction: column;
+  padding: 50px;
+  border: 1px solid rgb(224, 224, 224);
+  border-radius: 10px;
+  width: 350px;
+}

@@ -10,6 +10,7 @@ import Login from './functions/Login'
 import Signup from './functions/Signup'
 import Profile from './Profile'
 import SearchResultsPage from './SearchResultsPage'
+import OrderHistory from './OrderHistory'
 
 function App() {
   return (
@@ -59,6 +60,9 @@ function App() {
             </Route>
             <Route path = "/profile">
               <Profile/>
+            </Route>
+            <Route path = "/order-history">
+              <OrderHistory/>
             </Route>
             <Route path="/">
               <HomePage/>

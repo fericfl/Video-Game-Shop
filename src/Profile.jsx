@@ -60,7 +60,7 @@ const Profile = () => {
   };
 
   const handleViewOrderHistory = () => {
-    alert('Navigating to order history...');
+    window.location.href = '/order-history';
   };
 
   const handleLogout = async () => {
