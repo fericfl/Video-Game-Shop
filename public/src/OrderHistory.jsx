@@ -3,19 +3,6 @@ import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import { db } from "./functions/firebase";
 import GetCurrentUser from "./functions/GetCurrentUser";
 import { Link } from "react-router-dom";
-
-
-function OrderContainer({ order }) {
-    return (
-      <div style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}>
-        <p>Order ID: {order.id}</p>
-        <p>Amount: {order.amount}</p>
-        <p>Date: {order.timestamp.toDate().toLocaleDateString()}</p>
-        <Link to={`/order/${order.id}`}>View Details</Link>
-      </div>
-    );
-}
-
   
 function OrderHistory() {
     const user = GetCurrentUser();
@@ -44,9 +31,9 @@ function OrderHistory() {
                 {orders.map((order) => (
                     <div style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}>
                     <p>Order ID: {order.id}</p>
-                    <p>Amount: {order.total} lei</p>
+                    <p>Amount: {order.total} RON</p>
                     <p>Date: {order.timestamp.toDate().toLocaleDateString()}</p>
-                    <Link to={`/order/${order.id}`}>View Details</Link>
+                    <Link to={`/order-details/${order.id}`}>View Details</Link>
                   </div>
                 ))}
                 </ul>

@@ -14,7 +14,6 @@ const NavigationBar = () => {
     const loggeduser = GetCurrentUser();
     const [cartdata, setcartdata] = useState([]);
     const [search, setSearch] = useState("");
-    console.log(loggeduser);
     
     useEffect(() => {
     if(loggeduser){

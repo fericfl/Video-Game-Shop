@@ -333,12 +333,12 @@
 }
 
 .profile-form input:focus {
-  outline: 2px solid purple;
+  outline: 2px solid rgb(83, 76, 123);
   border: none;
 }
 
 .login-form button {
-  background-color: blueviolet;
+  background-color: rgb(83, 76, 123);
   margin: 20px 0px;
   border: none;
   font-size: 20px;
@@ -350,12 +350,12 @@
 
 .login-form button:hover {
   background-color: black;
-  color: blueviolet;
+  color: rgb(83, 76, 123);
   cursor: pointer;
 }
 
 .profile-form button {
-  background-color: blueviolet;
+  background-color: rgb(83, 76, 123);
   margin: 20px 0px;
   border: none;
   font-size: 20px;
@@ -367,7 +367,7 @@
 
 .profile-form button:hover {
   background-color: black;
-  color: blueviolet;
+  color: rgb(83, 76, 123);
   cursor: pointer;
 }
 
@@ -413,7 +413,7 @@
 }
 
 .signup-form button {
-  background-color: blueviolet;
+  background-color: rgb(83, 76, 123);
   margin: 20px 0px;
   border: none;
   font-size: 20px;
@@ -425,7 +425,7 @@
 
 .signup-form button:hover {
   background-color: black;
-  color: blueviolet;
+  color: rgb(83, 76, 123);
   cursor: pointer;
 }
 
