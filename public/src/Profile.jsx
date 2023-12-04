@@ -102,7 +102,9 @@ const Profile = () => {
           <div>
               <h1>Your Profile</h1>
                 <nav className='loginBar'>
+                    <p>
                     <button type='button' onClick={handleLogIn}>Log In</button>  <button type='button' onClick={handleSignUp}>Sign Up</button>
+                    </p>
                 </nav>
                 
                 <h1>User Profile</h1>
