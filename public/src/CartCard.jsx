@@ -2,7 +2,7 @@ import { updateDoc, doc, getDoc,where, query,getDocs, collection, deleteDoc } fr
 import react, { useState } from 'react'
 import {db} from "./functions/firebase"; // Import your Firebase configuration
 
-import "./functions/ShoppingCart.css"
+import "./style-sheets/ShoppingCart.css"
 
 const CartCard = ({item, userid}) => {
     const [prodquantity, setProdQuantity] = useState(item.quantity);

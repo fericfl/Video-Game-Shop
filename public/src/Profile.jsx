@@ -3,7 +3,7 @@ import GetCurrentUser from './functions/GetCurrentUser'
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import {db, auth} from "./functions/firebase"
-import './functions/ShoppingCart.css'
+import './style-sheets/ShoppingCart.css'
 import {Link} from 'react-router-dom'
 
 

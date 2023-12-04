@@ -3,7 +3,7 @@ import {deleteDoc, addDoc,serverTimestamp, collection,doc, getDocs, query, onSna
 import {db} from "./functions/firebase"; 
 import CartCard from "./CartCard"
 import GetCurrentUser from "./functions/GetCurrentUser";
-import './functions/ShoppingCart.css'
+import './style-sheets/ShoppingCart.css'
 
 
 const ShoppingCart = () => {
