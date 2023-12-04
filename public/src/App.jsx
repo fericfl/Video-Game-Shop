@@ -12,6 +12,7 @@ import Signup from './functions/Signup'
 import Profile from './Profile'
 import SearchResultsPage from './SearchResultsPage'
 import OrderHistory from './OrderHistory'
+import OrderDetails from './OrderDetails'
 
 function App() {
   return (
@@ -65,9 +66,8 @@ function App() {
             <Route path = "/profile">
               <Profile/>
             </Route>
-            <Route path = "/order-history">
-              <OrderHistory/>
-            </Route>
+            <Route path="/order-details/:orderId" component={OrderDetails} />
+            <Route path="/order-history" component={OrderHistory} />
             <Route path="/">
               <HomePage/>
             </Route>

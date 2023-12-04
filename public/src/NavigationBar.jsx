@@ -13,7 +13,6 @@ const NavigationBar = () => {
 
     const loggeduser = GetCurrentUser();
     const [search, setSearch] = useState("");
-    console.log(loggeduser);
     
   
     const history = useHistory();
