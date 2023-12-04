@@ -72,13 +72,23 @@ const Profile = () => {
     }
   };
   
+  const handleLogIn = () => {
+    window.location.href='login';
+  }
+
+  const handleSignUp = () => {
+    window.location.href='/signup';
+  }
+  
   if(!user) {
       return (
         <div className='profile-container'>
-          <h1>You are not signed in.</h1>
-          <p>
-          <Link to="/signup" id="links">Signup</Link> or <Link to="/login" id="links">Login</Link>
-          </p>
+          <form className='profile-form'>
+            <h1>You are not signed in.</h1>
+            <p>
+            <button type='button' onClick={handleLogIn}>Log In</button>  <button type='button' onClick={handleSignUp}>Sign Up</button>
+            </p>
+          </form>
         </div>
         
       );
@@ -92,7 +102,7 @@ const Profile = () => {
           <div>
               <h1>Your Profile</h1>
                 <nav className='loginBar'>
-                    <Link to="/signup" id="links">Signup</Link> <Link to="/login" id="links">Login</Link>
+                    <button type='button' onClick={handleLogIn}>Log In</button>  <button type='button' onClick={handleSignUp}>Sign Up</button>
                 </nav>
                 
                 <h1>User Profile</h1>

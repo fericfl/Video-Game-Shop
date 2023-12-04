@@ -8,32 +8,31 @@ import "./style-sheets/Order.css";
 function OrderDetails() {
     const { orderId } = useParams();
     const [order, setOrder] = useState(null);
-  
+
     useEffect(() => {
-      const fetchOrderDetails = async () => {
+        const fetchOrderDetails = async () => {
         try {
-          // Reference to the order document
-          const orderRef = doc(db, 'orders', orderId);
-  
-          // Fetch the order document
-          const orderDoc = await getDoc(orderRef);
-  
-          if (orderDoc.exists()) {
+            // Reference to the order document
+            const orderRef = doc(db, 'orders', orderId);
+
+            // Fetch the order document
+            const orderDoc = await getDoc(orderRef);
+
+            if (orderDoc.exists()) {
             // If the order document exists, set the order state
             setOrder(orderDoc.data());
-          } else {
+            } else {
             // Handle the case when the order document doesn't exist
             console.log("Order not found");
-          }
+            }
         } catch (error) {
-          console.error("Error fetching order details:", error);
-          // Handle the error
+            console.error("Error fetching order details:", error);
+            // Handle the error
         }
-      };
-  
-      // Call the fetchOrderDetails function
-      console.log(order);
-      fetchOrderDetails();
+        };
+
+        // Call the fetchOrderDetails function
+        fetchOrderDetails();
     }, [orderId]);
   
     return (
@@ -51,8 +50,20 @@ function OrderDetails() {
               <div className="order-items-title">Items in the Order:</div>
               <div className="allcartitems">
                 {order.items.map((item) => (
-                  <OrderCard key= {item.id}
-                                  item = {item}/>
+                  <div key={item.id} className="cart-prod-container">
+                  <div className="cart-prod-imgtitle">
+                    <div className="prod-image">
+                      <img src={item.product.productImage} alt={item.product.name} />
+                    </div>
+                  </div>
+                  <div className="productdetails">
+                    <div className="prod-title">{item.product.name}</div>
+                  </div>
+                  <div className="price-and-quantity">
+                    <div className="prodprice">{item.quantity * Number(item.product.price)} RON</div>
+                    <div className="quantity">{item.quantity} items</div>
+                  </div>
+                </div>
                 ))}
               </div>
             </div>
