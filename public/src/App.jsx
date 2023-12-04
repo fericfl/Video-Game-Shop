@@ -26,25 +26,25 @@ function App() {
             <Route path = "/add-product">
               <AddProduct/>
             </Route>
-            <Route exact path = "/games-action">
+            <Route path = "/games-action">
               <ProductList category = {'Action'}/>
             </Route>
-            <Route exact path = "/games-shooter">
+            <Route path = "/games-shooter">
               <ProductList category = {'Shooter'}/>
             </Route> 
-            <Route exact path = "/games-story">
+            <Route path = "/games-story">
               <ProductList category = {'Story'}/>
             </Route>
-            <Route exact path = "/games-simulation">
+            <Route path = "/games-simulation">
               <ProductList category = {'Simulation'}/>
             </Route>
-            <Route exact path = "/games-adventure">
+            <Route path = "/games-adventure">
               <ProductList category = {'Adventure'}/>
             </Route>
-            <Route exact path = "/games-racing">
+            <Route path = "/games-racing">
               <ProductList category = {'Racing'}/>
             </Route>
-            <Route exact path = "/games-puzzle">
+            <Route path = "/games-puzzle">
               <ProductList category = {'Puzzle'}/>
             </Route>
             <Route path = "/games/:id">
