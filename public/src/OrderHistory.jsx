@@ -23,11 +23,11 @@ function OrderHistory() {
 
     return (
         <div className="order-container">
-            <h1>Order History</h1>
+            <div className='cart-head'>Order History</div>
             {user ? (
             <div>
-                <p>Welcome, {user[0].username}!</p>
-                <ul>
+                <div className='welcome'>Welcome, {user[0].username}!</div>
+                <div>
                 {orders.map((order) => (
                     <div style={{ border: "1px solid #ccc", padding: "10px", marginBottom: "10px" }}>
                     <p>Order ID: {order.id}</p>
@@ -36,10 +36,10 @@ function OrderHistory() {
                     <Link to={`/order-details/${order.id}`}>View Details</Link>
                   </div>
                 ))}
-                </ul>
+                </div>
             </div>
             ) : (
-            <p>Please log in to view your order history.</p>
+                <div className='cart-head'>Please log in to view your order history.</div>
             )}
         </div>
     );
