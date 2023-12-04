@@ -22,9 +22,7 @@
     display: flex;
     flex-direction: row;
     border: 2px solid lightgrey;
-    
     border-radius: 20px;
-
 }
 .allcartitems{
     display: grid;
@@ -97,7 +95,6 @@
     grid-template-rows: 1fr 2fr;
     display: grid;
 
-    
   }
   .order-summary{
     height: fit-content;

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
 import { db } from "./functions/firebase";
+import OrderCard from "./OrderCard";
+import "./style-sheets/Order.css";
 
 function OrderDetails() {
     const { orderId } = useParams();
@@ -10,56 +12,50 @@ function OrderDetails() {
     useEffect(() => {
       const fetchOrderDetails = async () => {
         try {
-          // Fetch order details
-          const orderRef = doc(collection(db, "orders"), orderId);
-          const orderSnapshot = await getDoc(orderRef);
+          // Reference to the order document
+          const orderRef = doc(db, 'orders', orderId);
   
-          if (orderSnapshot.exists()) {
-            const orderData = { ...orderSnapshot.data(), id: orderSnapshot.id };
+          // Fetch the order document
+          const orderDoc = await getDoc(orderRef);
   
-            // Fetch items within the order
-            const itemsQuery = query(collection(db, "items"));
-            const itemsSnapshot = await getDocs(itemsQuery);
-            const items = itemsSnapshot.docs.map((itemDoc) => ({ ...itemDoc.data(), id: itemDoc.id }));
-  
-            // Add items to the orderData
-            orderData.items = items;
-            console.log(items);
-  
-            setOrder(orderData);
+          if (orderDoc.exists()) {
+            // If the order document exists, set the order state
+            setOrder(orderDoc.data());
           } else {
+            // Handle the case when the order document doesn't exist
             console.log("Order not found");
           }
         } catch (error) {
           console.error("Error fetching order details:", error);
+          // Handle the error
         }
       };
   
+      // Call the fetchOrderDetails function
+      console.log(order);
       fetchOrderDetails();
     }, [orderId]);
   
     return (
-      <div className="order-container">
-        <h1>Order Details</h1>
+      <div className="order-page-container">
+        <div className="cart-head">Order Summary</div>
         {order ? (
-          <div>
-            <p>Order ID: {order.id}</p>
-            <p>Amount: {order.amount}</p>
+          <div className="single-order-container">
+            <div className="order-details">
+            <p>Order ID: {orderId}</p>
+            <p>Amount: {order.total} RON</p>
             <p>Date: {order.timestamp.toDate().toLocaleDateString()}</p>
+            </div>
             
-            <h2>Items in the Order:</h2>
-            <ul>
-              {order.items.map((item) => (
-                <li key={item.id}>
-                  <p>Item ID: {item.id}</p>
-                  <p>Name: {item.product.name}</p>
-                  <p>Price: {item.product.price}</p>
-                  <p>Publisher: {item.product.publisher}</p>
-                  <p>Genres: {item.product.genre.join(", ")}</p>
-                  {/* Add more item details as needed */}
-                </li>
-              ))}
-            </ul>
+            <div className="order-items">
+              <div className="order-items-title">Items in the Order:</div>
+              <div className="allcartitems">
+                {order.items.map((item) => (
+                  <OrderCard key= {item.id}
+                                  item = {item}/>
+                ))}
+              </div>
+            </div>
           </div>
         ) : (
           <p>Loading...</p>
