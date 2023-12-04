@@ -6,7 +6,6 @@ import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
 
 const AddProduct = () => {
     const [genre, setGenre] = useState([]);
-    const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [popularity, setPopularity] = useState();
     const [price, setPrice] = useState("");
@@ -18,9 +17,6 @@ const AddProduct = () => {
     const [successMsg, setSuccessMsg] = useState('');
     const [uploadError, setUploadError] = useState('');
 
-    function GetCurrentUser(){
-        return null;
-    }
 
     const types = ['image/png', 'image/jpeg'];
         const handleProductImg = (e) => {
@@ -39,30 +35,38 @@ const AddProduct = () => {
             }
         }
         	
-    const loggeduser = GetCurrentUser();
     const storage = getStorage();
 
     const handleAddProdduct = (e) => {
         e.preventDefault();
+        
         const storageRef = ref(storage, `Products/${name}.png`);
-        console.log(storageRef._location.path);
+    
         uploadBytes(storageRef, productImage)
             .then(() => {
-                getDownloadURL(storageRef).then(url => {
-                    addDoc(collection(db, "products"),{
-                        genre,
-                        id,
-                        name,
-                        popularity,
-                        price,
-                        publisher,
-                        description, 
-                        productImage: url
-                    });
-                })
+                return getDownloadURL(storageRef);
             })
-        
-    }
+            .then((url) => {
+                return addDoc(collection(db, "products"), {
+                    genre,
+                    name,
+                    popularity,
+                    price,
+                    publisher,
+                    description,
+                    productImage: url
+                });
+            })
+            .then(() => {
+                // Update the success message state
+                setSuccessMsg('Product added successfully!');
+            })
+            .catch((error) => {
+                console.error('Error adding product:', error.message);
+                setUploadError('Failed to add product. Please try again.');
+            });
+    };
+    
     return (
         <div className="AddProductContainer">
             <form className="AddProductForm">
@@ -72,10 +76,6 @@ const AddProduct = () => {
 
                 <label>Game name</label>
                 <input type = "text" onChange={(e) => {setName(e.target.value)}} placeholder = "Game">     
-                </input>
-
-                <label>Id</label>
-                <input type = "text" onChange={(e) => {setId(e.target.value)}} placeholder = "Id">     
                 </input>
 
                 <label>Genre</label>

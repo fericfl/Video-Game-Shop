@@ -200,10 +200,7 @@
   align-items: center;
   text-align: center;
 }
-.product-container:hover img{
-  transform: scale(1.02); 
-  
-}
+/* Add additional styling for the overlay content if needed */
 
 .product-details{
   font-size: 20px;
@@ -297,20 +294,11 @@
 .shopping-cart-logo{
   margin-right: 10px;
 }
-.cart-icon-css{
-  border-radius: 30px;
-  border-color: white;
-  background-color:transparent;
-  color: white;
-}
-
 .prod-title{
   font-weight: 400;
   font-size: 170%;
   color: rgb(83, 76, 123);
 }
-
-
 .login-container {
   display: flex;
   justify-content: center;

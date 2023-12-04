@@ -23,6 +23,7 @@ const ProductContainer = ({product}) => {
             <a href = {`/games/${product.id}`}>
                 <img className="product-thumbnail" src={product.productImage} />
             </a>
+
             <div className="product-details">
                 <p className="product-title">
                     {product.name}

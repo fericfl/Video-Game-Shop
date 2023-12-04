@@ -4,6 +4,7 @@ import {db} from "./firebase"; // Import your Firebase configuration
 const AddToCart = ({loggeduser, product}) => {
     if (loggeduser) {
         // Check if the product is already in the cart
+        console.log("trying to add to cart");
         const cartRef = collection(db, `cart-${loggeduser[0].uid}`);
         const q = query(cartRef, where('product.name', '==', product.name));
              getDocs(q)
@@ -30,6 +31,8 @@ const AddToCart = ({loggeduser, product}) => {
                     }
             })
     } else {
+        alert('You have to be logged in to add to cart!');
+
     }
 };
 

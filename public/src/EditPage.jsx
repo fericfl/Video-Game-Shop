@@ -67,35 +67,45 @@ const EditPage = () => {
         }
     }
     const handleUpdateProduct = (e) => {
-        e.preventDefault();    
-        if (productImage !== '') {
-            const storageRef = ref(storage, `Products/${name}.png`);
-            const productDocRef = doc(db, 'products', productId);
-        
-            uploadBytes(storageRef, productImage)
-              .then(() => getDownloadURL(storageRef))
-              .then((url) => {
-                updateDoc(productDocRef, {
-                  genre,
-                  name,
-                  popularity,
-                  price,
-                  publisher,
-                  description,
-                  productImage: url,
-                });
-                setSuccessMsg('Product updated successfully!');
-              })
-              .catch((error) => {
-                console.error('Error updating product:', error.message);
-                setUploadError('Error updating product. Please try again.');
-              });
-          } else {
-            // Handle case when no file is selected, provide feedback or take appropriate action
-            console.log('No file selected. Please select a file.');
-          }
-        
+      e.preventDefault();
+      const productDocRef = doc(db, 'products', productId);
+      updateDoc(productDocRef, {
+        genre,
+        name,
+        popularity,
+        price,
+        publisher,
+        description,
+      });
+      setSuccessMsg('Product updated successfully!');
     };
+    
+    const handleUpdateImage = (e) => {
+      e.preventDefault();
+    
+      if (productImage !== '') {
+        const storageRef = ref(storage, `Products/${name}.png`);
+        const productDocRef = doc(db, 'products', productId);
+    
+        uploadBytes(storageRef, productImage)
+          .then(() => getDownloadURL(storageRef))
+          .then((url) => {
+            updateDoc(productDocRef, {
+              productImage: url,
+            });
+            setSuccessMsg('Image updated successfully!');
+          })
+          .catch((error) => {
+            console.error('Error updating image:', error.message);
+            setUploadError('Error updating image. Please try again.');
+          });
+      } else {
+        // Handle case when no file is selected, provide feedback or take appropriate action
+        console.log('No file selected. Please select a file.');
+      }
+    };
+    
+    
     return <div className="AddProductContainer">
     <form className="AddProductForm">
         <p> Add Data </p>
@@ -130,12 +140,18 @@ const EditPage = () => {
             value={description}
             ></textarea>
         
+       
+        <button type='submit' onClick = {handleUpdateProduct}>Update product</button>
+
         <label>Image</label>
         <input onChange={handleProductImg} type = "file" />     
         {imageError && <>
             <div className="error=msg"> {imageError}</div>
         </>}
-        <button type='submit' onClick = {handleUpdateProduct}>Update product</button>
+
+        <button type='submit' onClick = {handleUpdateImage}>Update image</button>
+
+        
     </form>
 </div>
 }

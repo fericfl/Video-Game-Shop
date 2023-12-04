@@ -12,28 +12,10 @@ const NavigationBar = () => {
     const hasSearchBar = true;
 
     const loggeduser = GetCurrentUser();
-    const [cartdata, setcartdata] = useState([]);
     const [search, setSearch] = useState("");
     console.log(loggeduser);
     
-    useEffect(() => {
-    if(loggeduser){
-        const getCartData= async () => {
-            const cartArray = [];
-            const path = `cart-${loggeduser[0].uid}`
-            console.log(path);
-            getDocs(collection(db, path)).then((QuerySnapshot) => {
-                QuerySnapshot.forEach((doc) => {
-                    console.log(doc.id, "=>", doc.data());
-                    cartArray.push({...doc.data(), id:doc.id})
-                })
-                setcartdata(cartArray)
-                console.log('done');
-            }).catch('Error error error');
-        }
-        getCartData();
-        console.log("getting cart data!!");
-    }}, []);
+  
     const history = useHistory();
     const [formData, setFormData] = useState('');
 
@@ -54,7 +36,11 @@ const NavigationBar = () => {
             </Link>
             {hasSearchBar && <div className="wrap">
             <div className="search">
-                <input type="text" className="searchTerm" placeholder="What are you looking for?" onChange={e => {setSearch(e.target.value); console.log(search)}}/>
+                <input type="text" 
+                        className="searchTerm" 
+                        placeholder="What are you looking for?" 
+                        onChange={e => {setSearch(e.target.value); console.log(search)} }
+                        onKeyDown={(e) => { if(e.key === 'Enter') handleFormSubmit();}}/>
                 <button type="submit" className="searchButton" onClick={handleFormSubmit}>
                 </button>
                 </div>
@@ -66,7 +52,6 @@ const NavigationBar = () => {
                 : <></>}
                 <div className='cart-btn'>
                     <Link to='/shopping-cart' className="shopping-cart-logo"><img src = {cartlogo} alt = "no img"/></Link>
-                    <button className='cart-icon-css'>{cartdata.length}</button>
                 </div>
                 <Link to="/profile" className="shopping-cart-logo"><img src = {profilelogo} alt = "no img"/></Link>
             </div>

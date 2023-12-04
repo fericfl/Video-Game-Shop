@@ -6,9 +6,11 @@ import CathegoryList from "./functions/CathegoryList";
 import GetCurrentUser from "./functions/GetCurrentUser"
 import AddToCart from "./functions/AddToCart";
 import {Link} from 'react-router-dom'
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 
 const SpecificProductPage = () => {
+    const history = useHistory();
     const loggeduser = GetCurrentUser();
     const {id} = useParams();
     const [product, setProduct] = useState('');
@@ -27,6 +29,13 @@ const SpecificProductPage = () => {
         AddToCart({ loggeduser, product });
     };
     
+    const handleEditItem = () => {
+        console.log("the product is:" + product.id);
+        history.push({ 
+            pathname: `/edit-page/${product.name}`,
+            state: {productId: id },
+        });
+    }
 
     console.log(loggeduser);
     
@@ -55,9 +64,14 @@ const SpecificProductPage = () => {
                     <div className="product-price">{product.price} RON</div>
                 </div>
                 <div className = "buy-cart">
+                {loggeduser && loggeduser[0].email === "admin@email.com" ? 
+                <button className = 'btn-specific' onClick={handleEditItem}>
+                    Edit item
+                </button> :
                 <button className = 'btn-specific' onClick={handleAddToCart}>
                     Add to cart
                 </button>
+                }
             </div>
             </div>
         </div>

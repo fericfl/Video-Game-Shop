@@ -81,6 +81,13 @@ const ShoppingCart = () => {
       }
     };
     
+    if(!loggeduser) {
+      return (
+        <div className="shoppingCart">
+          <div className='cart-head'> Your are not signed in</div>    
+        </div> 
+      );
+  }
     return (        
         <div className="shoppingCart">
         {cartData && cartData.length > 0 ? <div> 
