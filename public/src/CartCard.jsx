@@ -89,7 +89,7 @@ const CartCard = ({item, userid}) => {
                 <div className='quantity'>{prodquantity}</div>
                 <button onClick={decreasequantity} className='quantity-button'>-</button>
                 </div>
-                <button onClick={deletecartitem} className='delete-button'> delete item</button>   
+                <button onClick={deletecartitem} className='delete-button-cart'> delete item</button>   
             </div>
             
            

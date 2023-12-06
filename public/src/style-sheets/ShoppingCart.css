@@ -77,13 +77,13 @@
     font-size: 20px;
     padding-bottom: 20%;
   }
-  .delete-button{
+  .delete-button-cart{
     padding-top: 10%;
     background-color: transparent;
     border: transparent;
     color: rgb(83, 76, 123);
   }
-  .delete-button:hover{
+  .delete-button-cart:hover{
     color: red;
   }
 
