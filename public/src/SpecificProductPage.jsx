@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {useParams} from "react-router-dom";
-import {addDoc, getDoc, doc, collection} from "firebase/firestore";
+import {addDoc, getDoc, doc, collection,deleteDoc} from "firebase/firestore";
 import {db} from "./functions/firebase"; // Import your Firebase configuration
 import CathegoryList from "./functions/CathegoryList";
 import GetCurrentUser from "./functions/GetCurrentUser"
@@ -14,6 +14,8 @@ const SpecificProductPage = () => {
     const loggeduser = GetCurrentUser();
     const {id} = useParams();
     const [product, setProduct] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
+    const [uploadError, setUploadError] = useState('');
 
 
     useEffect(() => {
@@ -37,6 +39,17 @@ const SpecificProductPage = () => {
         });
     }
 
+    const handleDeleteProduct = async (e) => {
+        e.preventDefault();
+        try {
+          const productDocRef = doc(db, 'products', id);
+          await deleteDoc(productDocRef);
+          setSuccessMsg(`Product ${product.name} deleted successfully!`);
+        } catch (error) {
+          console.error('Error deleting product:', error.message);
+          setUploadError('Error deleting product. Please try again.');
+        }
+      };
     console.log(loggeduser);
     
     return <div className="Product-page-container">
@@ -44,10 +57,13 @@ const SpecificProductPage = () => {
           <CathegoryList title= "All Categories"/>
         </div>
         <div className="specific-product-details-container">
+        
             <div className="title-and-image">
                 <img className="product-image" src={product.productImage} />
             </div>
             <div className="product-details">
+            {successMsg && <div className='success-msg'>{successMsg}</div>}
+        {uploadError && <div className='error-msg'>{uploadError}</div>}
             <h1 className="specific-product-title">
                 {product.name}
                 </h1>
@@ -64,10 +80,13 @@ const SpecificProductPage = () => {
                     <div className="product-price">{product.price} RON</div>
                 </div>
                 <div className = "buy-cart">
-                {loggeduser && loggeduser[0].email === "admin@email.com" ? 
+                {loggeduser && loggeduser[0].email === "admin@email.com" ? <div> 
                 <button className = 'btn-specific' onClick={handleEditItem}>
                     Edit item
-                </button> :
+                </button>
+                <button className="submit-delete-button" onClick = {handleDeleteProduct}>🗑️ Delete product</button>
+
+                </div> :
                 <button className = 'btn-specific' onClick={handleAddToCart}>
                     Add to cart
                 </button>

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { collection, getDocs, query, where, addDoc, Firestore } from 'firebase/firestore';
+import { useState, useEffect } from "react";
+import { collection, getDocs, query, where, addDoc, Firestore,orderBy } from 'firebase/firestore';
 import {db, storage} from "./firebase";
 import { getStorage, ref, getDownloadURL, uploadBytes} from "firebase/storage";
 
@@ -16,6 +16,53 @@ const AddProduct = () => {
     const [imageError, setImageError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
     const [uploadError, setUploadError] = useState('');
+
+    const [categories, setCategories] = useState([]);
+    const [suggestedPublishers, setSuggestedPublishers] = useState([]);
+
+        useEffect(() => {
+            const fetchDistinctPublishers = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'products'));
+                const uniquePublishers = new Set();
+
+                querySnapshot.forEach((doc) => {
+                const publisher = doc.data().publisher;
+                uniquePublishers.add(publisher);
+                });
+
+                // Convert the Set to an array
+                const distinctPublishersArray = Array.from(uniquePublishers);
+                setSuggestedPublishers(distinctPublishersArray);
+            } catch (error) {
+                console.error('Error fetching distinct publishers:', error.message);
+            }
+            };
+
+            fetchDistinctPublishers();
+        }, [successMsg]);
+    
+      const handlePublisherChange = (e) => {
+        setPublisher(e.target.value);
+      };
+
+    const fetchCategories = async () => {
+        const categoryRef = collection(db, "categories");
+        const q = query(categoryRef, orderBy("name")); // Sort categories alphabetically by name
+    
+        try {
+          const querySnapshot = await getDocs(q);
+          const categoriesData = querySnapshot.docs.map((doc) => doc.data());
+          setCategories(categoriesData);
+        } catch (error) {
+          console.error("Error fetching categories: ", error);
+        }
+      };
+    
+      useEffect(() => {
+        console.log("fetching cat");
+        fetchCategories();
+      }, []);
 
 
     const types = ['image/png', 'image/jpeg'];
@@ -79,9 +126,19 @@ const AddProduct = () => {
                 </input>
 
                 <label>Genre</label>
-                <input type = "text" onChange={(e) => {setGenre(e.target.value.split(',').map(value => value.trim())) }} 
-                placeholder="Genre (comma-separated)">     
-                </input>
+                <select
+                        onChange={(e) => {
+                        setGenre(Array.from(e.target.selectedOptions, (option) => option.value));
+                        }}
+                        multiple={true}
+                    >
+                        {categories.map((category) => (
+                        <option key={category.id} value={category.name}>
+                            {category.name}
+                        </option>
+                        ))}
+                    </select>
+                    <label className="colored-label">Selected Genres: {genre.join(', ')}</label>
 
                 <label>Popularity</label>
                 <input type = "int" onChange={(e) => {setPopularity(e.target.value)}} placeholder = "Popularity">     
@@ -92,8 +149,19 @@ const AddProduct = () => {
                 </input>
 
                 <label>Publisher</label>
-                <input type = "text" onChange={(e) => {setPublisher(e.target.value)}} placeholder = "Publisher">     
-                </input>
+                <input
+                    type="text"
+                    value={publisher}
+                    onChange={handlePublisherChange}
+                    list="publishers"
+                    placeholder="Publisher"
+                />
+                <datalist id="publishers">
+                    {suggestedPublishers.map((suggestedPublisher, index) => (
+                    <option key={index} value={suggestedPublisher} />
+                    ))}
+                </datalist>
+                <label className="colored-label">Selected Publisher: {publisher}</label>
 
                 <label>Description</label>
                 <input type = "text" onChange={(e) => {setDescription(e.target.value)}} placeholder = "Description">     
@@ -104,7 +172,7 @@ const AddProduct = () => {
                 {imageError && <>
                     <div className="error=msg"> {imageError}</div>
                 </>}
-                <button type='submit' onClick = {handleAddProdduct}>Add</button>
+                <button className="submit-button" type='submit' onClick = {handleAddProdduct}>Add</button>
             </form>
         </div> 
     )

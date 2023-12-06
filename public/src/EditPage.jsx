@@ -1,6 +1,7 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db, storage } from "./functions/firebase";
 import { getDownloadURL, uploadBytes, ref } from "firebase/storage";
+import { collection, getDocs, query, where, addDoc, Firestore,orderBy,deleteDoc} from 'firebase/firestore';
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 
@@ -21,6 +22,67 @@ const EditPage = () => {
     const [uploadError, setUploadError] = useState('');
 
     const [product, setProduct] = useState('');
+    const [categories, setCategories] = useState([]);
+
+    const [suggestedPublishers, setSuggestedPublishers] = useState([]);
+
+    const handleDeleteProduct = async (e) => {
+      e.preventDefault();
+      try {
+        const productDocRef = doc(db, 'products', productId);
+        await deleteDoc(productDocRef);
+        setSuccessMsg(`Product ${name} deleted successfully!`);
+      } catch (error) {
+        console.error('Error deleting product:', error.message);
+        setUploadError('Error deleting product. Please try again.');
+      }
+    };
+    
+    
+
+        useEffect(() => {
+            const fetchDistinctPublishers = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'products'));
+                const uniquePublishers = new Set();
+
+                querySnapshot.forEach((doc) => {
+                const publisher = doc.data().publisher;
+                uniquePublishers.add(publisher);
+                });
+
+                // Convert the Set to an array
+                const distinctPublishersArray = Array.from(uniquePublishers);
+                setSuggestedPublishers(distinctPublishersArray);
+            } catch (error) {
+                console.error('Error fetching distinct publishers:', error.message);
+            }
+            };
+
+            fetchDistinctPublishers();
+        }, []);
+    
+      const handlePublisherChange = (e) => {
+        setPublisher(e.target.value);
+      };
+
+    const fetchCategories = async () => {
+      const categoryRef = collection(db, "categories");
+      const q = query(categoryRef, orderBy("name")); // Sort categories alphabetically by name
+  
+      try {
+        const querySnapshot = await getDocs(q);
+        const categoriesData = querySnapshot.docs.map((doc) => doc.data());
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error("Error fetching categories: ", error);
+      }
+    };
+  
+    useEffect(() => {
+      console.log("fetching cat");
+      fetchCategories();
+    }, []);
 
 
     useEffect(() => {
@@ -48,7 +110,7 @@ const EditPage = () => {
             }
           };
         getProduct();
-      }, [productId]);
+      }, []);
 
     const types = ['image/png', 'image/jpeg'];
     const handleProductImg = (e) => {
@@ -107,8 +169,11 @@ const EditPage = () => {
     
     
     return <div className="AddProductContainer">
+      
     <form className="AddProductForm">
-        <p> Add Data </p>
+        <h1> Add Data </h1>
+        <h1> Add Data </h1>
+
         {successMsg && <div className='success-msg'>{successMsg}</div>}
         {uploadError && <div className='error-msg'>{uploadError}</div>}
 
@@ -117,9 +182,20 @@ const EditPage = () => {
         </input>
 
         <label>Genre</label>
-        <input type = "text" onChange={(e) => {setGenre(e.target.value.split(',').map(value => value.trim())) }} 
-        value={genre}>     
-        </input>
+                <select
+                        onChange={(e) => {
+                        setGenre(Array.from(e.target.selectedOptions, (option) => option.value));
+                        }}
+                        multiple={true}
+                        >
+                        {categories.map((category) => (
+                        <option key={category.id} value={category.name}>
+                            {category.name}
+                        </option>
+                        ))}
+                    </select>
+                    <label className="colored-label">Selected Genres: {genre.join(', ')}</label>
+
 
         <label>Popularity</label>
         <input type = "int" onChange={(e) => {setPopularity(e.target.value)}} value={popularity}>     
@@ -130,8 +206,19 @@ const EditPage = () => {
         </input>
 
         <label>Publisher</label>
-        <input type = "text" onChange={(e) => {setPublisher(e.target.value)}} value={publisher}>     
-        </input>
+                <input
+                    type="text"
+                    value={publisher}
+                    onChange={handlePublisherChange}
+                    list="publishers"
+                    placeholder="Publisher"
+                />
+                <datalist id="publishers">
+                    {suggestedPublishers.map((suggestedPublisher, index) => (
+                    <option key={index} value={suggestedPublisher} />
+                    ))}
+                </datalist>
+                <label className="colored-label">Selected Publisher: {publisher}</label>
 
         <label>Description</label>
         <textarea
@@ -141,7 +228,7 @@ const EditPage = () => {
             ></textarea>
         
        
-        <button type='submit' onClick = {handleUpdateProduct}>Update product</button>
+        <button className="submit-button" type='submit' onClick = {handleUpdateProduct}>Update product</button>
 
         <label>Image</label>
         <input onChange={handleProductImg} type = "file" />     
@@ -149,8 +236,8 @@ const EditPage = () => {
             <div className="error=msg"> {imageError}</div>
         </>}
 
-        <button type='submit' onClick = {handleUpdateImage}>Update image</button>
-
+        <button className="submit-button" type='submit' onClick = {handleUpdateImage}>Update image</button>
+        <button className="submit-delete-button" onClick = {handleDeleteProduct}>🗑️ Delete product</button>
         
     </form>
 </div>

@@ -21,7 +21,7 @@
     outline: none;
     color: #9DBFAF;
   }
-  
+
   .searchTerm:focus{
     color: rgb(83, 76, 123);
   }
@@ -102,19 +102,25 @@
     margin-bottom: 15px;
     width: 250px;
   }
-  .cathegory-items-box{
-    border-right: 2px solid  rgb(83, 76, 123);
+  .cathegory-items-box {
+    border-right: 2px solid rgb(83, 76, 123);
     max-width: 250px;
     color: rgb(83, 76, 123);
+    display: flex;
+    align-items: center; /* Align items vertically at the center of the flex container */
   }
-  .cathegory-items{
+  
+  .cathegory-items {
+    width: 100%;
     color: rgb(83, 76, 123);
     font-size: 25px;
-    font-style: bold;
-    font-weight: 600;
-    display: block;
-
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
     text-decoration: none;
+    align-items: center; /* Align items vertically in the center */
+    flex-direction: row; /* Display items horizontally */
+    align-self: flex-start; /* Align the button to the start of the flex container */
   }
   .cathegory-items-box:hover{
     color: white;
@@ -125,6 +131,7 @@
   }
 
 .AddProductForm{
+  padding-top: 8%;
   display:flex;
   flex-direction: column;
   padding: 0px 10px;
@@ -150,12 +157,11 @@
 }
 
 
-.AddProductForm button{
-  margin: 40px;
+.AddProductForm .submit-button{
+  margin: 10px;
   font-size: 20px;
   background-color: black;
   color : #e0dfdc;
-  padding: 10px;
   border-radius: 8px;
   display: inline-block;
   margin-right: 30px;
@@ -492,4 +498,63 @@
   word-wrap: break-word;
   word-break: break-all;
   height: 80px;
+}
+
+.add-button{
+  padding-top: 10%;
+  
+}
+
+.delete-button {
+  background-color: transparent;
+  color: red;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  text-align: center;
+}
+.delete-button:hover::before{
+  content: "delete!";
+  color: white;
+}
+
+
+.submit-delete-button{
+  margin: 10px;
+  font-size: 20px;
+  background-color: transparent;
+  color : red;
+  font-weight: 500;
+  border-radius: 8px;
+  display: inline-block;
+  margin-right: 30px;
+  text-decoration: none;
+
+}
+.submit-delete-button:hover{
+  background-color: red;
+  color : white;
+}
+
+  
+.input-category{
+  border: 3px solid black;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  padding: 2px;
+  outline: none;
+  color: #9DBFAF;
+}
+.input-category-button{
+  border: 2px solid black;
+  background: black;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 100%;
+
+}
+.colored-label{
+  color: rgb(174, 163, 235);
 }

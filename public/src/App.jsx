@@ -13,6 +13,7 @@ import Profile from './Profile'
 import SearchResultsPage from './SearchResultsPage'
 import OrderHistory from './OrderHistory'
 import OrderDetails from './OrderDetails'
+import AllGames from './AllGames'
 
 function App() {
   return (
@@ -27,26 +28,11 @@ function App() {
             <Route path = "/add-product">
               <AddProduct/>
             </Route>
-            <Route path = "/games-action">
-              <ProductList category = {'Action'}/>
+            <Route path = "/category/">
+              <ProductList/>
             </Route>
-            <Route path = "/games-shooter">
-              <ProductList category = {'Shooter'}/>
-            </Route> 
-            <Route path = "/games-story">
-              <ProductList category = {'Story'}/>
-            </Route>
-            <Route path = "/games-simulation">
-              <ProductList category = {'Simulation'}/>
-            </Route>
-            <Route path = "/games-adventure">
-              <ProductList category = {'Adventure'}/>
-            </Route>
-            <Route path = "/games-racing">
-              <ProductList category = {'Racing'}/>
-            </Route>
-            <Route path = "/games-puzzle">
-              <ProductList category = {'Puzzle'}/>
+            <Route exact path = "/games">
+              <AllGames></AllGames>
             </Route>
             <Route path = "/games/:id">
               <SpecificProductPage/>
