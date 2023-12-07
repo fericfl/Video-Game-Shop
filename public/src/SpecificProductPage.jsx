@@ -80,7 +80,7 @@ const SpecificProductPage = () => {
                     <div className="product-price">{product.price} RON</div>
                 </div>
                 <div className = "buy-cart">
-                {loggeduser && loggeduser[0].email === "admin@email.com" ? <div> 
+                {loggeduser && loggeduser[0].isAdmin ? <div> 
                 <button className = 'btn-specific' onClick={handleEditItem}>
                     Edit item
                 </button>

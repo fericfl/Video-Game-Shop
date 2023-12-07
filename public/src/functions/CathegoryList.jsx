@@ -82,7 +82,7 @@ const CathegoryList = ({title}) => {
                 <div className="cathegory-items-box">
                     <a className="cathegory-items" onClick={() => handleChooseCategory(category.name)}>
                         {category.name}
-                        {loggeduser && loggeduser[0].email === "admin@email.com" ?
+                        {loggeduser && loggeduser[0].isAdmin ?
                         <button className='delete-button' onClick={() => handleDeleteCategory(category)}>🗑️</button> : <></>}
                     </a>
                 
@@ -90,7 +90,7 @@ const CathegoryList = ({title}) => {
             </div>
             ))}
             <div className="add-button">
-                {loggeduser && loggeduser[0].email === "admin@email.com" ?
+                {loggeduser && loggeduser[0].isAdmin ?
                     <form onSubmit={handleAddCategory}>
                         <input
                         className='input-category'

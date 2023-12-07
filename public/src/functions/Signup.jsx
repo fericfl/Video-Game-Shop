@@ -11,37 +11,47 @@ const Signup = () => {
   const [errorMsg, setErrorMsg]  = useState("");
   const [successMsg, setSuccessMsg] = useState("");
 
-  const handleSubmit = (e) => {
-      e.preventDefault();
-      createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) =>{
-          const user = userCredential.user
-          addDoc(collection(db, "users"),{
-            username: username,
-            email: email,
-            password: password,
-            uid: user.uid
-          }).then(() =>{
-              setSuccessMsg('New user added successfully, you will now be automatically redirected to login page.')
-              setUsername('')
-              setEmail('')
-              setPassword('')
-              setTimeout(() => {
-                  setSuccessMsg('');
-                  window.location.href = '/login';
-              }, 4000);
-            })
-            
-      })
-      .catch((error) => {
-          if (error.message === 'Firebase: Error (auth/invalid-email).') {
-              setErrorMsg('Please fill all required fields')
-          }
-          if (error.message === 'Firebase: Error (auth/email-already-in-use.') {
-            setErrorMsg('User already exists');
-          }
-        });
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    try {
+      // Create a new user using Firebase authentication
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+  
+      // Add user information to Firestore database
+      await addDoc(collection(db, "users"), {
+        username: username,
+        email: email,
+        uid: user.uid,
+        isAdmin: false, // Assuming the default value for isAdmin is false
+      });
+  
+      // Display success message
+      setSuccessMsg('New user added successfully. You will now be automatically redirected to the login page.');
+      setUsername('');
+      setEmail('');
+      setPassword('');
+  
+      // Redirect to the login page after a delay
+      setTimeout(() => {
+        setSuccessMsg('');
+        window.location.href = '/login';
+      }, 4000);
+    } catch (error) {
+      console.error('Error during signup:', error);
+  
+      // Handle specific error cases
+      if (error.code === 'auth/invalid-email') {
+        setErrorMsg('Invalid email address.');
+      } else if (error.code === 'auth/email-already-in-use') {
+        setErrorMsg('Email address is already in use.');
+      } else {
+        setErrorMsg('An error occurred during signup. Please try again.');
+      }
+    }
+  };
+  
 
   return ( 
       <div className='signup-container'>

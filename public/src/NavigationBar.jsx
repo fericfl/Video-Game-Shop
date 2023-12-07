@@ -46,7 +46,7 @@ const NavigationBar = () => {
             </div>
             }
             <div className="links">
-                {loggeduser && loggeduser[0].email === "admin@email.com" ?
+                {loggeduser && loggeduser[0].isAdmin ?
                 <Link to="/add-product" className="shopping-cart-logo"><img src = {addlogo} alt = "no img"/></Link> 
                 : <></>}
                 <div className='cart-btn'>
