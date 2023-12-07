@@ -53,7 +53,7 @@ function App() {
               <Profile/>
             </Route>
             <Route path="/order-details/:orderId" component={OrderDetails} />
-            <Route path="/order-history" component={OrderHistory} />
+            <Route path="/order-history/:userId" component={OrderHistory} />
             <Route path="/">
               <HomePage/>
             </Route>

@@ -558,3 +558,46 @@
 .colored-label{
   color: rgb(174, 163, 235);
 }
+
+.select-list {
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 25px;
+  outline: none;
+  color: black;
+}
+
+.select-list:focus {
+  color: black;
+}
+
+.select-list option {
+  background-color: white;
+  color: rgb(83, 76, 123);
+}
+
+.select-list option:hover {
+  background-color: white;
+  color: rgb(83, 76, 123);
+}
+
+.UserForm label {
+  margin-top: 5px;
+  font-size: 17px;
+  
+}
+
+.user-form {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 3px;
+  width: 300px;
+  outline: none;
+  color: black;
+}
+
+.user-form input:focus {
+  outline: 2px solid rgb(83, 76, 123);
+  border: none;
+}
