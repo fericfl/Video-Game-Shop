@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import GetCurrentUser from './functions/GetCurrentUser'
 import { doc, updateDoc, deleteDoc, collection, getDocs, query, where} from 'firebase/firestore';
+import { updateProfile, sendEmailVerification } from 'firebase/auth';
+
 import { sendPasswordResetEmail } from 'firebase/auth';
+import { updateEmail } from 'firebase/auth';
+
 import {db, auth} from "./functions/firebase"
 import './style-sheets/ShoppingCart.css'
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
@@ -20,6 +24,8 @@ const Profile = () => {
   const [emailErrorMsg, setEmailErrorMsg] = useState();
   const [nameSuccessMsg, setNameSuccessMsg] = useState();
   const [nameErrorMsg, setNameErrorMsg] = useState();
+  const [selectedUserIsAdmin, setSelectedUserIsAdmin] = useState(true);
+
 
   const [userList, setUserList] = useState([]);
   const [searchEmail, setSearchEmail] = useState('');
@@ -28,7 +34,7 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUserList = async () => {
-      if (user && user[0].email === "admin@email.com") {
+      if (user && user[0].isAdmin) {
         try {
           const usersCollection = collection(db, 'users');
           const querySnapshot = await getDocs(usersCollection);
@@ -42,6 +48,27 @@ const Profile = () => {
 
     fetchUserList();
   }, [user, selectedUser]);
+  
+  const handlePromoteToAdmin = async () => {
+    try {
+      if (selectedUser) {
+        const q = query(collection(db, "users"), where("uid", "==", selectedUserId));
+        const data = await getDocs(q);
+        const selectedUser = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0];
+
+        const userDocRef = doc(db, 'users', selectedUser.id);
+        await updateDoc(userDocRef, { isAdmin: true });
+        setSelectedUserIsAdmin(true);
+
+        alert('User promoted to admin successfully!');
+      } else {
+        console.error('No selected user to promote to admin.');
+      }
+    } catch (error) {
+      console.error('Error promoting user to admin:', error.message);
+    }
+  };
+
 
   const handleUpdateName = async () => {
     try {
@@ -60,22 +87,33 @@ const Profile = () => {
     }
   };
   
+// ... (your existing code)
 
-  const handleUpdateEmail = async () => {
-    try {
-      const q = query(collection(db, "users"), where("uid", "==", user[0].email));
-      const data = await getDocs(q);
-      const selectedUser = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0];
+const handleUpdateEmail = async () => {
+  try {
+    const q = query(collection(db, "users"), where("uid", "==", user[0].uid));
+    const data = await getDocs(q);
+    const selectedUser = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0];
+
+    const userDocRef = doc(db, 'users', selectedUser.id);
+    await updateDoc(userDocRef, { email: email });
+
+
+    // Update the email in authentication credentials
+    const userAuth = auth.currentUser;
+    await updateProfile(userAuth, { email: email });
+
+    // Send email verification
+    await sendEmailVerification(userAuth);
+
+    setEmailSuccessMsg('Email update request sent. Please check your email for verification instructions.');
+  } catch (error) {
+    console.error('Error updating email:', error.message);
+    setEmailErrorMsg('There was an error updating the email');
+  }
+};
+
   
-      const userDocRef = doc(db, 'users', selectedUser.id);
-      await updateDoc(userDocRef, { email: email });
-  
-      setEmailSuccessMsg('Email updated successfully! Refresh the page to see the update');
-    } catch (error) {
-      console.error('Error updating email:', error.message);
-      setEmailErrorMsg('There was an error updating the email');
-    }
-  };
   
 
   const handleResetPassword = async () => {
@@ -146,6 +184,7 @@ const Profile = () => {
     setSelectedUserEmail(user.email);
     setSelectedUserId(user.uid);
     setUserId(user.uid);
+    setSelectedUserIsAdmin(user.isAdmin);
     console.log(userId);
   };
 
@@ -174,7 +213,7 @@ const Profile = () => {
     <div className='profile-container'>
       <form className='profile-form' onSubmit={handleSearchUser}>
 
-        {user && user[0].email != "admin@email.com" && (
+        {user && user[0].isAdmin == false && (
           <div>
             <h1>Your Profile</h1>
             <p>Name: {user[0].username}</p>
@@ -195,7 +234,7 @@ const Profile = () => {
                     )}
             <div/>
             <label className='AddProductForm'>
-              New Email: <input className='user-form' type="email" value={selectedUserEmail} onChange={(e) => setSelectedUserEmail(e.target.value)} />
+            New Email: <input className='user-form' type="email" value={email} onChange={(e) => {setEmail(e.target.value); console.log({email})}} />
               {emailSuccessMsg && (
                 <div className='success-msg'>
                   {emailSuccessMsg}
@@ -213,7 +252,7 @@ const Profile = () => {
           </div>
         )}
 
-        {user && user[0].email === 'admin@email.com' && (
+        {user && user[0].isAdmin && (
           <div>
             <h1>Your Profile</h1>
             <p>Name: {user[0].username}</p>
@@ -244,16 +283,23 @@ const Profile = () => {
                     <h1>Selected User Profile</h1>
                     <p>Name: {selectedUser.username}</p>
                     <p>Email: {selectedUser.email}</p>
+                    <p>Is admin?: {' ' + selectedUserIsAdmin }</p>
+
                   </div>
         )}
 
-        {selectedUser && user && user[0].email === "admin@email.com" && (
+        {selectedUser && user && user[0].isAdmin && (
           <div>
              
             <button type='button' onClick={() => handleViewOrderHistory(selectedUserId)}>View User Order History</button> 
             <button type='button' onClick={handleDeleteAccount}>Delete Account</button>  
           </div>
         )}
+
+        {selectedUser && selectedUser.isAdmin == false && user && user[0].isAdmin && (
+            <button onClick={handlePromoteToAdmin}>Promote to admin</button>    
+        )}
+
         <button type='button' onClick={handleLogout}>Log Out</button>
       </form>
     </div>
