@@ -41,7 +41,7 @@ const Profile = () => {
     };
 
     fetchUserList();
-  }, [user && user[0].email === "admin@email.com"]);
+  }, [user, selectedUser]);
 
   const handleUpdateName = async () => {
     try {
@@ -95,6 +95,8 @@ const Profile = () => {
         const selectedUser = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0];
         const userDocRef = doc(db, 'users', selectedUser.id);
         await deleteDoc(userDocRef);
+        setUserList((prevUserList) => prevUserList.filter((user) => user.uid !== selectedUserId));
+
       }
       else {
         const q = query(collection(db, "users"), where("uid", "==", user[0].uid));
@@ -103,6 +105,8 @@ const Profile = () => {
         const userDocRef = doc(db, 'users', selectedUser.id);
         await auth.signOut();
         await deleteDoc(userDocRef);
+        setUserList((prevUserList) => prevUserList.filter((user) => user.uid !== user[0].uid));
+
       }
       
   
