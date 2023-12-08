@@ -13,7 +13,6 @@ const Profile = () => {
 
   const [selectedUserName, setSelectedUserName] = useState('');
   const [selectedUserEmail, setSelectedUserEmail] = useState('');
-  const [selectedUserIsAdmin, setSelectedUserIsAdmin] = useState(true);
   const [selectedUserId, setSelectedUserId] = useState('');
   const [username, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -27,10 +26,9 @@ const Profile = () => {
   const [searchedUserList, setSearchedUserList] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
 
-
   useEffect(() => {
     const fetchUserList = async () => {
-      if (user && user[0].isAdmin) {
+      if (user && user[0].email === "admin@email.com") {
         try {
           const usersCollection = collection(db, 'users');
           const querySnapshot = await getDocs(usersCollection);
@@ -43,7 +41,7 @@ const Profile = () => {
     };
 
     fetchUserList();
-  }, [user && user[0].isAdmin]);
+  }, [user && user[0].email === "admin@email.com"]);
 
   const handleUpdateName = async () => {
     try {
@@ -62,36 +60,14 @@ const Profile = () => {
     }
   };
   
-  const handlePromoteToAdmin = async () => {
-    try {
-      if (selectedUser) {
-        const q = query(collection(db, "users"), where("uid", "==", selectedUserId));
-        const data = await getDocs(q);
-        const selectedUser = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0];
-
-        const userDocRef = doc(db, 'users', selectedUser.id);
-        await updateDoc(userDocRef, { isAdmin: true });
-        setSelectedUserIsAdmin(true);
-
-        alert('User promoted to admin successfully!');
-      } else {
-        console.error('No selected user to promote to admin.');
-      }
-    } catch (error) {
-      console.error('Error promoting user to admin:', error.message);
-    }
-  };
 
   const handleUpdateEmail = async () => {
-    console.log(user[0]);
-    console.log("saved email is " + email);
-
     try {
       const q = query(collection(db, "users"), where("uid", "==", user[0].email));
       const data = await getDocs(q);
       const selectedUser = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0];
   
-      const userDocRef = doc(db, 'users', user[0].id);
+      const userDocRef = doc(db, 'users', selectedUser.id);
       await updateDoc(userDocRef, { email: email });
   
       setEmailSuccessMsg('Email updated successfully! Refresh the page to see the update');
@@ -118,7 +94,6 @@ const Profile = () => {
         const data = await getDocs(q);
         const selectedUser = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0];
         const userDocRef = doc(db, 'users', selectedUser.id);
-        await auth.signOut();
         await deleteDoc(userDocRef);
       }
       else {
@@ -136,7 +111,7 @@ const Profile = () => {
       console.error('Error deleting account:', error.message);
     }
   };
-
+  
 
   const handleViewOrderHistory = (userId) => {
     history.push({
@@ -166,10 +141,8 @@ const Profile = () => {
     setSelectedUserName(user.username);
     setSelectedUserEmail(user.email);
     setSelectedUserId(user.uid);
-    console.log("is Admin? " + user.isAdmin);
-    setSelectedUserIsAdmin(user.isAdmin);
-    console.log(selectedUserIsAdmin);
-
+    setUserId(user.uid);
+    console.log(userId);
   };
 
   const handleSearchUser = (e) => {
@@ -197,7 +170,7 @@ const Profile = () => {
     <div className='profile-container'>
       <form className='profile-form' onSubmit={handleSearchUser}>
 
-        {user && user[0].isAdmin == false && (
+        {user && user[0].email != "admin@email.com" && (
           <div>
             <h1>Your Profile</h1>
             <p>Name: {user[0].username}</p>
@@ -218,7 +191,7 @@ const Profile = () => {
                     )}
             <div/>
             <label className='AddProductForm'>
-              New Email: <input className='user-form' type="email" value={email} onChange={(e) => {setEmail(e.target.value); console.log({email})}} />
+              New Email: <input className='user-form' type="email" value={selectedUserEmail} onChange={(e) => setSelectedUserEmail(e.target.value)} />
               {emailSuccessMsg && (
                 <div className='success-msg'>
                   {emailSuccessMsg}
@@ -236,7 +209,7 @@ const Profile = () => {
           </div>
         )}
 
-        {user && user[0].isAdmin && (
+        {user && user[0].email === 'admin@email.com' && (
           <div>
             <h1>Your Profile</h1>
             <p>Name: {user[0].username}</p>
@@ -267,20 +240,15 @@ const Profile = () => {
                     <h1>Selected User Profile</h1>
                     <p>Name: {selectedUser.username}</p>
                     <p>Email: {selectedUser.email}</p>
-                    <p>Is admin?: {' ' + selectedUserIsAdmin }</p>
                   </div>
         )}
 
-        {selectedUser && user && user[0].isAdmin && (
+        {selectedUser && user && user[0].email === "admin@email.com" && (
           <div>
              
             <button type='button' onClick={() => handleViewOrderHistory(selectedUserId)}>View User Order History</button> 
             <button type='button' onClick={handleDeleteAccount}>Delete Account</button>  
           </div>
-        )}
-
-        {selectedUser && selectedUser.isAdmin == false && user && user[0].isAdmin && (
-            <button onClick={handlePromoteToAdmin}>Promote to admin</button>    
         )}
         <button type='button' onClick={handleLogout}>Log Out</button>
       </form>
