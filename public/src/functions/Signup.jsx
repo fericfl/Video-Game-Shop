@@ -1,6 +1,6 @@
 import React,{useState} from 'react'
 import { Link } from 'react-router-dom/cjs/react-router-dom.min'
-import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 import { auth, db } from './firebase'
 import { collection, addDoc } from 'firebase/firestore'
 
@@ -51,6 +51,22 @@ const Signup = () => {
       }
     }
   };
+
+  const handleGoogleSignUp = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // Handle successful Google Sign-Up
+      setSuccessMsg('');
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 3000);
+      console.log(result.user);
+    } catch (error) {
+      // Handle errors
+      console.error(error);
+    }
+  };
   
 
   return ( 
@@ -81,6 +97,9 @@ const Signup = () => {
 
               <p>
                   <button type='submit'>Sign Up</button>
+                  <button type='button' onClick={handleGoogleSignUp}>
+                    Sign Up with Google
+                  </button> 
                   <div>
                     <span>Already have an account?</span>
                     <Link to='/login'>Log In</Link>

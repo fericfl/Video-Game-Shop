@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
 
 const Login = () => {
   const [password, setPassword] = useState();
@@ -25,14 +25,31 @@ const Login = () => {
         setErrorMsg('Something went wrong. Please check credentials and try again')
     })
 
-  }
+  };
+
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      // Handle successful Google Sign-In
+      console.log(result.user);
+      setTimeout(() => {
+        setSuccessMsg('');
+        window.location.href= '/';
+      }, 3000)
+    } catch (error) {
+      // Handle errors
+      setErrorMsg('Something went wrong with the Google Sign In, please try again.');
+      console.error(error);
+    }
+  };
 
   return (
       <div className='login-container'>
           <form className='login-form' onSubmit={handleLogin}>
               <p>Login Account</p>
 
-              {successMsg && (
+              {successMsg && (  
                 <div className='success-msg'>
                     {successMsg}
                 </div>
@@ -51,6 +68,7 @@ const Login = () => {
 
               <p>
                   <button onClick={handleLogin}>Login</button>
+                  <button onClick={handleGoogleSignIn}>Log In with Google</button>
                   <div>
                     <span>Don't have an account?</span>
                     <Link to='/signup'>Sign Up</Link>

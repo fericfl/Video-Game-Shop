@@ -14,7 +14,7 @@ const ShoppingCart = () => {
     const [orderEmail, setOrderEmail] = useState('');
     useEffect(() => {
       if (loggeduser) {
-        const path = `cart-${loggeduser[0].uid}`;
+        const path = `cart-${loggeduser.uid}`;
         const cartRef = collection(db, path);
   
         const unsubscribe = onSnapshot(cartRef, (querySnapshot) => {
@@ -49,7 +49,7 @@ const ShoppingCart = () => {
       // Add the order to the database
       try {
         const orderData = {
-          userId: loggeduser[0].uid,
+          userId: loggeduser.uid,
           items: cartData,
           total: totalprice,
           timestamp: serverTimestamp(),
@@ -65,7 +65,7 @@ const ShoppingCart = () => {
         setTotalPrice(0);
         setOrderEmail('');
 
-        const cartPath = `cart-${loggeduser[0].uid}`;
+        const cartPath = `cart-${loggeduser.uid}`;
         const cartRef = collection(db, cartPath);
         const cartSnapshot = await getDocs(cartRef);
 
@@ -98,7 +98,7 @@ const ShoppingCart = () => {
                 {cartData.map((item) => (
                   <CartCard key = {item.id} 
                             item = {item}
-                            userid={loggeduser[0].uid}/>
+                            userid={loggeduser.uid}/>
                 ))}
               </div>
               <div className="order-summary-container">

@@ -2,18 +2,22 @@ import {Link} from 'react-router-dom'
 import GetCurrentUser from './functions/GetCurrentUser';
 import React, { useEffect, useState } from "react";
 import {QuerySnapshot, addDoc, getDocs, doc, collection} from "firebase/firestore";
-import {db} from "./functions/firebase"; // Import your Firebase configuration
+import {db, auth} from "./functions/firebase"; // Import your Firebase configuration
 import cartlogo from './assets/shopping-cart-3045.svg'
 import addlogo from './assets/add-button-12017.svg'
 import profilelogo from './assets/person-244.svg'
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const NavigationBar = () => {
     const hasSearchBar = true;
+    const [loggeduser, setLoggedUser] = useState({});
 
-    const loggeduser = GetCurrentUser();
     const [search, setSearch] = useState("");
     
+    useEffect(() => {
+        onAuthStateChanged(auth, (currentUser) => setLoggedUser(currentUser))
+    }, []) 
   
     const history = useHistory();
     const [formData, setFormData] = useState('');
@@ -38,7 +42,7 @@ const NavigationBar = () => {
                 <input type="text" 
                         className="searchTerm" 
                         placeholder="What are you looking for?" 
-                        onChange={e => {setSearch(e.target.value); console.log(search)} }
+                        onChange={e => {setSearch(e.target.value);} }
                         onKeyDown={(e) => { if(e.key === 'Enter') handleFormSubmit();}}/>
                 <button type="submit" className="searchButton" onClick={handleFormSubmit}>
                 </button>
@@ -46,7 +50,7 @@ const NavigationBar = () => {
             </div>
             }
             <div className="links">
-                {loggeduser && loggeduser[0].isAdmin ?
+                {loggeduser && loggeduser.email === 'ericflaviu.florea@gmail.com' ?
                 <Link to="/add-product" className="shopping-cart-logo"><img src = {addlogo} alt = "no img"/></Link> 
                 : <></>}
                 <div className='cart-btn'>

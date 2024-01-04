@@ -31,7 +31,7 @@ const ProductContainer = ({product}) => {
                 <p className="product-price"> {product.price} RON</p>
             </div>
             <div className = "buy-cart">
-                {loggeduser && loggeduser[0].isAdmin ? 
+                {loggeduser && loggeduser.email == 'ericflaviu.florea@gmail.com' ? 
                 <button className = 'btn' onClick={handleEditItem}>
                     Edit item
                 </button> :

@@ -2,17 +2,22 @@ import {Link} from 'react-router-dom'
 import GetCurrentUser from './GetCurrentUser';
 import React, { useEffect, useState } from "react";
 import {query, getDocs, collection, orderBy, doc, deleteDoc,where} from "firebase/firestore";
-import {db} from "./firebase"; // Import your Firebase configuration
+import {db, auth} from "./firebase"; // Import your Firebase configuration
 import AddCategory from './AddCategory';
 import { useHistory } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
 
 const CathegoryList = ({title}) => {
     const [categories, setCategories] = useState([]);
     const history = useHistory();
 
-    const loggeduser = GetCurrentUser();
+    const [loggeduser, setLoggedUser] = useState({});
 
     const [inputCategory, setInputCategory] = useState('');
+
+    useEffect(() => {
+      onAuthStateChanged(auth, (currentUser) => setLoggedUser(currentUser))
+  }, []) 
 
     const fetchCategories = async () => {
         const categoryRef = collection(db, "categories");
@@ -82,7 +87,7 @@ const CathegoryList = ({title}) => {
                 <div className="cathegory-items-box">
                     <a className="cathegory-items" onClick={() => handleChooseCategory(category.name)}>
                         {category.name}
-                        {loggeduser && loggeduser[0].isAdmin ?
+                        {loggeduser && loggeduser.email === 'ericflaviu.florea@gmail.com' ?
                         <button className='delete-button' onClick={() => handleDeleteCategory(category)}>🗑️</button> : <></>}
                     </a>
                 
@@ -90,7 +95,7 @@ const CathegoryList = ({title}) => {
             </div>
             ))}
             <div className="add-button">
-                {loggeduser && loggeduser[0].isAdmin ?
+                {loggeduser && loggeduser.email === 'ericflaviu.florea@gmail.com' ?
                     <form onSubmit={handleAddCategory}>
                         <input
                         className='input-category'
