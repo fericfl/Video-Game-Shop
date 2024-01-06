@@ -4,7 +4,6 @@ import { doc, updateDoc, deleteDoc, collection, getDocs, query, where} from 'fir
 import { updateProfile, sendEmailVerification } from 'firebase/auth';
 
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { updateEmail } from 'firebase/auth';
 
 import {db, auth} from "./functions/firebase"
 import './style-sheets/ShoppingCart.css'
@@ -80,44 +79,20 @@ const Profile = () => {
         const userDocRef = doc(db, 'users', selectedUser.id);
         await updateDoc(userDocRef, { username: username });
   
-      setNameSuccessMsg('Username updated successfully!');
+      setNameSuccessMsg('Username updated successfully! Refresh the page in order to see the change.');
     } catch (error) {
       console.error('Error updating name:', error.message);
       setNameErrorMsg('Something went wrong!');
     }
   };
   
-// ... (your existing code)
-
-const handleUpdateEmail = async () => {
-  try {
-    const q = query(collection(db, "users"), where("uid", "==", user[0].uid));
-    const data = await getDocs(q);
-    const selectedUser = data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))[0];
-
-    const userDocRef = doc(db, 'users', selectedUser.id);
-    await updateDoc(userDocRef, { email: email });
-
-
-    // Update the email in authentication credentials
-    const userAuth = auth.currentUser;
-    await updateProfile(userAuth, { email: email });
-
-    // Send email verification
-    await sendEmailVerification(userAuth);
-
-    setEmailSuccessMsg('Email update request sent. Please check your email for verification instructions.');
-  } catch (error) {
-    console.error('Error updating email:', error.message);
-    setEmailErrorMsg('There was an error updating the email');
-  }
-};
-
-  
-  
-
   const handleResetPassword = async () => {
     try {
+      if(selectedUserEmail.length === 0) {
+        setSelectedUserEmail(user[0].email);
+        console.log(user[0].email);
+      }
+      console.log(selectedUserEmail);
       await sendPasswordResetEmail(auth, selectedUserEmail);
       alert('Password reset email sent. Check your email for further instructions!');
     } catch (error) {
@@ -233,20 +208,7 @@ const handleUpdateEmail = async () => {
                       </div>
                     )}
             <div/>
-            <label className='AddProductForm'>
-            New Email: <input className='user-form' type="email" value={email} onChange={(e) => {setEmail(e.target.value); console.log({email})}} />
-              {emailSuccessMsg && (
-                <div className='success-msg'>
-                  {emailSuccessMsg}
-                </div>
-              )}
-              {emailErrorMsg && (
-                <div className='error-msg'>
-                  {emailErrorMsg}
-                </div>
-              )}
-            </label>
-            <button type='button' onClick={handleUpdateEmail}>Update Email</button> <button type='button' onClick={handleResetPassword}>Reset Password</button>
+            <button type='button' onClick={handleResetPassword}>Reset Password</button>
             <button type='button' onClick={() => handleViewOrderHistory(user[0].uid)}>View Order History</button>
             <button type='button' onClick={handleDeleteAccount}>Delete Account</button>  
           </div>
