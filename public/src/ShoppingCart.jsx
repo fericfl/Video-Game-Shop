@@ -39,45 +39,111 @@ const ShoppingCart = () => {
       }
     }, [loggeduser, cartData]);
     
+    const sendOrderEmail = async (orderId,orderData) => {
+      var s = `Order confirmation. Order id ${orderId}`;
+      var items = orderData.items;
+      try {
+        const emailData = {
+          to: orderEmail,
+          message: {
+            html: `
+            <head>
+
+            <style>
+            * {
+              margin: 0;
+              font-family: "Quicksand";
+              font-size: 15px;
+            }
+            .order-details {
+              margin-bottom: 20px;
+            }
+            .product-name {
+              font-weight: bold;
+            }
+            .total {
+              font-weight: bold;
+            }
+            .title {
+              color: rgb(83, 76, 123);
+              font-size: 20px; 
+              font-weight: bold;
+              padding-bottom: 10px;
+            }
+          </style>
+            </head>
+            <div class="title">Thank you for your order!</div>
+
+            <div>
+            ${orderData.items.flatMap((order) => (
+              Array.from({ length: order.quantity }).map((_, index) => (
+                `<div key=${order.id}-${index} class="order-details">
+                  <p class="product-name"> Product: ${order.product.name}</p>
+                  <p>Key: ${order.id}</p>
+                </div>`
+              ))
+            )).join('')}
+              <p class= "total">Total value: ${orderData.total}</p>
+            </div>`,
+            subject: `Order confirmation`,
+          }
+        };
+        console.log(orderData);
+        console.log(orderData.items);
+
+    
+        // Replace 'mail' with your actual database path
+        const mailRef = collection(db, 'mail'); // Assuming you have a function generateRandomKey() that generates a random key
+        await addDoc(mailRef, emailData);
+      } catch (error) {
+        console.error('Error sending order email:', error.message);
+        throw new Error('Failed to send the order email. Please try again.');
+      }
+    };
+
     const handleCheckout = async () => {
       // Check if the email is filled
       if (!orderEmail.trim()) {
         alert('Please enter your email before proceeding to checkout.');
         return;
-      }
-  
-      // Add the order to the database
-      try {
-        const orderData = {
-          userId: loggeduser[0].uid,
-          items: cartData,
-          total: totalprice,
-          timestamp: serverTimestamp(),
-          userEmail: orderEmail,
-        };
-  
-        // Replace 'orders' with your actual database path
-        const ordersRef = collection(db, 'orders');
-        await addDoc(ordersRef, orderData);
-  
-        // Clear the cart and display a success message
-        setCartData([]);
-        setTotalPrice(0);
-        setOrderEmail('');
+      }else{
+        
+    
+        // Add the order to the database
+        try {
+          const orderData = {
+            userId: loggeduser[0].uid,
+            items: cartData,
+            total: totalprice,
+            timestamp: serverTimestamp(),
+            userEmail: orderEmail,
+          };
+    
+          // Replace 'orders' with your actual database path
+          const ordersRef = collection(db, 'orders');
+          await addDoc(ordersRef, orderData);
+    
+          // Clear the cart and display a success message
+          setCartData([]);
+          setTotalPrice(0);
+          setOrderEmail('');
 
-        const cartPath = `cart-${loggeduser[0].uid}`;
-        const cartRef = collection(db, cartPath);
-        const cartSnapshot = await getDocs(cartRef);
+          const cartPath = `cart-${loggeduser[0].uid}`;
+          const cartRef = collection(db, cartPath);
+          const cartSnapshot = await getDocs(cartRef);
 
-        cartSnapshot.forEach(async (cartDoc) => {
-        await deleteDoc(doc(cartRef, cartDoc.id));
-        });
-        alert('Order placed successfully!');
+          cartSnapshot.forEach(async (cartDoc) => {
+          await deleteDoc(doc(cartRef, cartDoc.id));
+          });
+          alert('Order placed successfully!');
+          await sendOrderEmail(ordersRef.id, orderData);
 
-  
-      } catch (error) {
-        console.error('Error adding order to the database:', error.message);
-        alert('Failed to place the order. Please try again.');
+
+    
+        } catch (error) {
+          console.error('Error adding order to the database:', error.message);
+          alert('Failed to place the order. Please try again.');
+        }
       }
     };
     
@@ -121,8 +187,8 @@ const ShoppingCart = () => {
                   <div className="total-price-final">
                     {totalprice} RON
                   </div>
-                  <div className="checkout-button-div"> 
-                    <button className="checkout-button" onClick= {handleCheckout}> Proceed to checkout </button> 
+                  <div className="checkout-button-div">
+                  <button className="checkout-button" onClick= {handleCheckout}> Proceed to checkout </button> 
                   </div> 
                   
                 </div>
