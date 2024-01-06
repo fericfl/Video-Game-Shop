@@ -83,7 +83,7 @@ const ShoppingCart = () => {
                 </div>`
               ))
             )).join('')}
-              <p class= "total">Total value: ${orderData.total}</p>
+              <p class= "total">Total value: ${orderData.total} RON</p>
             </div>`,
             subject: `Order confirmation`,
           }
